@@ -5,7 +5,7 @@ import netlify from '@astrojs/netlify'
 export default defineConfig({
   output: 'server',
   adapter: netlify(),
-  site: 'https://afordin.netlify.app',
+  site: 'https://afordintest.netlify.app',
   vite: {
     plugins: [tailwindcss()],
   },
