@@ -1,7 +1,11 @@
 import { defineConfig, fontProviders } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
+import netlify from '@astrojs/netlify'
 
 export default defineConfig({
+  output: 'server',
+  adapter: netlify(),
+  site: 'https://afordin.netlify.app',
   vite: {
     plugins: [tailwindcss()],
   },
