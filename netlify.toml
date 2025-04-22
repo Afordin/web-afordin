@@ -1,4 +1,5 @@
-[build]
-  command   = "npm run build"
-  publish   = "dist"
-  functions = "netlify/functions"
+[dev]
+  framework = "astro"
+  command = "pnpm run dev"
+  targetPort = 4321 # <-- Asegúrate que este puerto coincida con Astro
+  port = 8888       # Este es el proxy de Netlify (no lo cambies)
