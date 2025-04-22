@@ -1,7 +1,7 @@
 import { setRefreshToken } from '@/lib/tokenStore'
 import type { APIRoute } from 'astro'
 
-export const get: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url)
   const code = url.searchParams.get('code')
   if (!code) {

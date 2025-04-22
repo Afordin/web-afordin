@@ -1,20 +1,16 @@
-import { promises as fs } from 'fs'
-import path from 'path'
+import { readFile, writeFile } from 'fs/promises'
+import { existsSync } from 'fs'
 
-const TOKEN_FILE = path.resolve('./refresh_token.json')
+const filePath = './refresh_token.json'
 
 export async function getRefreshToken(): Promise<string> {
-  try {
-    const txt = await fs.readFile(TOKEN_FILE, 'utf-8')
-    const { refresh_token } = JSON.parse(txt)
-    if (!refresh_token) throw new Error('No hay refresh_token')
-    return refresh_token
-  } catch (err) {
-    throw new Error('Error leyendo refresh token: ' + err)
+  if (!existsSync(filePath)) {
+    throw new Error('No hay refresh_token.json aún. Visita /api/twitch/login para autorizar.')
   }
+  const data = await readFile(filePath, 'utf-8')
+  return JSON.parse(data).refresh_token
 }
 
-export async function setRefreshToken(refresh_token: string): Promise<void> {
-  const payload = { refresh_token }
-  await fs.writeFile(TOKEN_FILE, JSON.stringify(payload, null, 2), 'utf-8')
+export async function setRefreshToken(token: string) {
+  await writeFile(filePath, JSON.stringify({ refresh_token: token }))
 }

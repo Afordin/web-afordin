@@ -1,6 +1,8 @@
 import { getRefreshToken } from '@/lib/tokenStore'
 import type { APIRoute } from 'astro'
 
+export const prerender = false
+
 // Utilidad para dividir en bloques de 100
 function chunkArray<T>(array: T[], size: number): T[][] {
   const chunks: T[][] = []
@@ -34,7 +36,7 @@ async function fetchAccessToken() {
   return access_token as string
 }
 
-export const get: APIRoute = async () => {
+export const GET: APIRoute = async () => {
   let token: string
   try {
     token = await fetchAccessToken()

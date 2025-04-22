@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro'
 
-export const get: APIRoute = () => {
+export const GET: APIRoute = () => {
   const clientId = import.meta.env.TWITCH_CLIENT_ID!
   const redirect = encodeURIComponent(import.meta.env.TWITCH_REDIRECT_URI!)
   const scope = encodeURIComponent('channel:read:subscriptions')
