@@ -1,47 +1,73 @@
 ---
+import Link from '@/components/ui/Link.astro'
+
 const links = [
   {
-    href: '#',
+    to: '#',
     name: 'Inicio',
   },
   {
-    href: '#',
+    to: '#',
     name: 'Valores',
   },
   {
-    href: '#',
+    to: '#',
     name: 'Proyectos',
   },
   {
-    href: '#',
+    to: '#',
     name: 'Eventos',
   },
   {
-    href: '#',
+    to: '#',
     name: 'Contribuyentes',
   },
 ]
 
 const socialLinks = [
   {
-    href: '#',
+    to: '#',
     name: 'github',
   },
   {
-    href: '#',
+    to: '#',
     name: 'discord',
   },
 ]
 ---
 
-<nav class="absolute top-5 z-50 flex items-center justify-between gap-5 rounded-full bg-white/30 p-4">
-  <img src="./public/logo.png" alt="" />
-  {links.map((link) => <a href={link.href}>{link.name}</a>)}
-  {
-    socialLinks.map((link) => (
-      <a href={link.href} class="size-8">
-        <img src={`./social/${link.name}.png`} alt={link.name} />
-      </a>
-    ))
-  }
+<nav
+  class="bg-glass font-manrope absolute top-5 z-50 flex w-full max-w-7xl items-center justify-between gap-5 rounded-full px-10 py-4 lg:px-12"
+>
+  <img src="/logo.png" alt="" class="h-9 w-7" />
+  <div class="hidden gap-x-14 lg:flex">
+    {
+      links.map(({ to, name }) => (
+        <Link {to} class="text-lg hover:underline">
+          {name}
+        </Link>
+      ))
+    }
+  </div>
+  <div class="hidden gap-x-4 lg:flex">
+    {
+      socialLinks.map(({ to, name }) => (
+        <Link external {to} class="flex size-6 items-center">
+          <img src={`/social/${name}.png`} alt={name} />
+        </Link>
+      ))
+    }
+  </div>
+  <div class="lg:hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47 47" width="47" height="47" fill="none">
+      <rect x="0.5" y="0.518555" width="45.5" height="45.75" rx="22.75" fill="white" fill-opacity="0.1"></rect>
+      <rect x="0.5" y="0.518555" width="45.5" height="45.75" rx="22.75" stroke="white"></rect>
+      <path
+        d="M15 20.0186H31.5M15 26.7686H31.5"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+  </div>
 </nav>

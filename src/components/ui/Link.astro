@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
+  to: string
+  external?: boolean
+}
+
+const { to, title, external = false, class: extraClass, ...restProps } = Astro.props
+const rel = external ? 'noopener noreferrer' : null
+const target = external ? '_blank' : null
+---
+
+<a {rel} {target} {title} href={to} class:list={[extraClass]} {...restProps}>
+  <slot />
+</a>
