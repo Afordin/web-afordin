@@ -29,7 +29,7 @@ const subs = await res.json()
 <ul>
   {
     subs.length > 0 ? (
-      subs.map((sub) => (
+      subs.map((sub: any) => (
         <li>
           <>
             <strong>{sub.user_name}</strong>
