@@ -9,13 +9,11 @@ const origin = import.meta.env.SITE ?? 'http://localhost:4321'
 // 2) Monta la URL completa y haz el fetch en SSR
 const url = new URL('/api/twitch/subscribers', origin).toString()
 const res = await fetch(url)
-console.log(origin, res)
-let subs: any[] = []
 
 if (!res.ok) {
-  // throw new Error(`Error cargando suscriptores: ${res.status} ${await res.text()}`)
+  throw new Error(`Error cargando suscriptores: ${res.status} ${await res.text()}`)
 }
-// const subs = await res.json()
+const subs = await res.json()
 ---
 
 <style>
