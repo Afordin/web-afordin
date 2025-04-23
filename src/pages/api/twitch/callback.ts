@@ -1,4 +1,3 @@
-import { setRefreshToken } from '@/lib/tokenStore'
 import type { APIRoute } from 'astro'
 
 export const GET: APIRoute = async ({ request }) => {
@@ -27,9 +26,7 @@ export const GET: APIRoute = async ({ request }) => {
   }
   const { access_token, refresh_token } = await tokenRes.json()
 
-  await setRefreshToken(refresh_token)
-
-  return new Response('¡Autorización completada! Ya puedes cerrar esta ventana.', {
+  return new Response(`${refresh_token}`, {
     status: 200,
     headers: { 'Content-Type': 'text/plain' },
   })

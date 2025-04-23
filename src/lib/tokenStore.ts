@@ -3,7 +3,3 @@ export async function getRefreshToken(): Promise<string> {
   if (!token) throw new Error('No refresh token set in environment')
   return token
 }
-
-export async function setRefreshToken(token: string) {
-  console.warn('Setting refresh token', token)
-}
