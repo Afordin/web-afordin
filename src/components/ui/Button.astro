@@ -1,5 +1,5 @@
 ---
-// Bauti was here :)
+// Bauti was here
 type Props = {
   href: string
 }
@@ -8,41 +8,50 @@ const { href } = Astro.props
 
 <style>
   .fancy-hover {
-    --color: linear-gradient(135deg, #fff, #f66a99);
+    transition: all 0.4s ease;
+    background: white;
     position: relative;
     overflow: hidden;
-    transition: color 0.5s;
     z-index: 1;
   }
 
   .fancy-hover::before {
     content: '';
     position: absolute;
+    inset: 0;
     z-index: -1;
-    background: var(--color);
-    height: 170px;
-    width: 300px;
-    border-radius: 50%;
-    top: 100%;
-    left: 100%;
-    transition: all 0.5s ease-in-out;
+    background: linear-gradient(135deg, #fff, #f66a99);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .fancy-hover:hover::before {
+    opacity: 1;
   }
 
   .fancy-hover:hover {
     color: #000;
-    box-shadow: 0 7px 29px rgba(220, 197, 204, 0.5);
+    box-shadow: 0 0 20px 5px rgba(246, 106, 153, 0.5);
   }
 
-  .fancy-hover:hover::before {
-    top: -30px;
-    left: -30px;
+  /* 🔥 Animación al hacer clic */
+  .fancy-hover:active {
+    animation: click-bounce 0.2s ease-in-out;
   }
 
-  .fancy-hover:active::before {
-    background: #3a0ca3;
-    transition: background 0s;
+  @keyframes click-bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.94);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 </style>
+
 <a
   href={href}
   target="_blank"

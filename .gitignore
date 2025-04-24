@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # eslint cache
 .eslintcache
+pnpm-lock.yaml
