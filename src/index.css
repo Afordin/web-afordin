@@ -45,3 +45,47 @@
 .scroll-column {
   will-change: transform;
 }
+
+.fancy-hover {
+  transition: all 0.4s ease;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.fancy-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #fff, #f66a99);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.fancy-hover:hover::before {
+  opacity: 1;
+}
+
+.fancy-hover:hover {
+  color: #000;
+  box-shadow: 0 0 20px 5px rgba(246, 106, 153, 0.5);
+}
+
+/* 🔥 Animación al hacer clic */
+.fancy-hover:active {
+  animation: click-bounce 0.2s ease-in-out;
+}
+
+@keyframes click-bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
