@@ -51,7 +51,11 @@ const socialLinks = [
   >
     <div>
       <Link to="/">
-        <img src={Logo} alt="Logo de Afordin" class="h-9" />
+        <img
+          src={Logo}
+          alt="Logo de Afordin"
+          class="h-9 transition-all duration-300 hover:brightness-75 hover:filter"
+        />
       </Link>
     </div>
     <div class="flex lg:hidden">
@@ -92,7 +96,11 @@ const socialLinks = [
       {
         socialLinks.map(({ icon, name, to }) => (
           <Link external {to} class="inline-block transition-transform duration-300 hover:scale-110">
-            <img src={icon} alt={`Icono de ${name}`} class="size-8" />
+            <img
+              src={icon}
+              alt={`Icono de ${name}`}
+              class="size-8 transition-all duration-300 hover:brightness-75 hover:filter"
+            />
           </Link>
         ))
       }
