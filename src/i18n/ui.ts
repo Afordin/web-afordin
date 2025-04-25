@@ -66,6 +66,11 @@ export const ui = {
     'lastProject.title': 'Nuestros últimos proyectos',
     'lastProject.paragraph': 'Todo el mundo participa, independientemente de su nivel.',
     'lastProject.anchor': 'Empieza a contribuir',
+    // Final CTA
+    'finalCTA.title': '¿A qué estás esperando?',
+    'finalCTA.paragraph': 'Descubre lo que podemos crear juntos',
+    'finalCTA.button': '¡Empezar a crear!',
+    'footer.paragraph.contributtors.error': 'Contribuidores no disponibles en este momento',
   },
   en: {
     // community
@@ -112,5 +117,10 @@ export const ui = {
     'lastProject.title': 'Our latest projects',
     'lastProject.paragraph': 'Everyone participates, regardless of their level.',
     'lastProject.anchor': 'Start contributing',
+    // Final CTA
+    'finalCTA.title': 'What are you waiting for?',
+    'finalCTA.paragraph': 'Discover what we can create together',
+    'finalCTA.button': 'Start creating!',
+    'footer.paragraph.contributtors.error': 'Contributors not available at this moment',
   },
 } as const satisfies UI<KeyLang, KeyTranslation>

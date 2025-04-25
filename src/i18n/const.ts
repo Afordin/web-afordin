@@ -21,6 +21,7 @@ export const KEY_TRANSLATIONS = {
   'footer.title.designer': 'footer.title.designer',
   'footer.title.developers': 'footer.title.developers',
   'footer.title.viewers': 'footer.title.viewers',
+  'footer.paragraph.contributtors.error': 'footer.paragraph.contributtors.error',
   'hero.welcome': 'hero.welcome',
   'hero.title': 'hero.title',
   'hero.title.second': 'hero.title.second',
@@ -36,4 +37,7 @@ export const KEY_TRANSLATIONS = {
   'lastProject.title': 'lastProject.title',
   'lastProject.paragraph': 'lastProject.paragraph',
   'lastProject.anchor': 'lastProject.anchor',
+  'finalCTA.title': 'finalCTA.title',
+  'finalCTA.paragraph': 'finalCTA.paragraph',
+  'finalCTA.button': 'finalCTA.button',
 } as const
