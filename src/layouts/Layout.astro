@@ -16,12 +16,12 @@ const lang = getLangFromUrl(Astro.url)
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} class="scroll-smooth">
   <head>
     <Metatags {description} {title} {slug} {themeColor} />
     <slot name="head" />
   </head>
-  <body class="relative">
+  <body class="relative overflow-y-scroll">
     <SquarePattern />
     <div class="font-manrope flex w-full flex-col items-center bg-[var(--color-primary)] text-white">
       <slot />
