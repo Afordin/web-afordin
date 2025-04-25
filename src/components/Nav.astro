@@ -2,6 +2,8 @@
 import { getLangFromUrl, useTranslations } from '@/i18n/utils'
 import Link from '@/components/Link.astro'
 import Github from '../assets/Github.svg?url'
+import Youtube from '../assets/Youtube.svg?url'
+import Twitch from '../assets/Twitch.svg?url'
 import Discord from '../assets/Discord.svg?url'
 import Logo from '../assets/Logo.svg?url'
 
@@ -42,6 +44,16 @@ const socialLinks = [
     name: 'discord',
     icon: Discord,
   },
+  {
+    to: 'https://www.youtube.com/@afor_lives',
+    name: 'youtube',
+    icon: Youtube,
+  },
+  {
+    to: 'https://www.twitch.tv/afor_digital',
+    name: 'twitch',
+    icon: Twitch,
+  },
 ] satisfies Array<{ to: string; name: string; icon: any }>
 ---
 
@@ -66,9 +78,6 @@ const socialLinks = [
         <svg class="hamburger-icon size-10" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
         </svg>
-        <svg class="close-icon hidden size-10" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
       </button>
     </div>
 
@@ -92,45 +101,66 @@ const socialLinks = [
     <!-- Social media icons for large screens -->
     <div class="hidden items-center justify-center gap-4 lg:flex">
       {
-        socialLinks.map(({ icon, name, to }) => (
-          <Link external {to} class="inline-block transition-transform duration-300 hover:scale-110">
-            <img src={icon} alt={`Icono de ${name}`} class="size-6" />
-          </Link>
-        ))
+        socialLinks
+          .filter((link) => link.name === 'github' || link.name === 'discord')
+          .map(({ icon, name, to }) => (
+            <Link external {to} class="inline-block transition-transform duration-300 hover:scale-110">
+              <img src={icon} alt={`Icono de ${name}`} class="size-6" />
+            </Link>
+          ))
       }
     </div>
   </nav>
 
   <!-- Mobile menu -->
   <div
-    class="pointer-events-none mx-auto mt-2 max-w-[95%] scale-95 transform opacity-0 transition-all duration-50 lg:hidden"
+    class="pointer-events-none fixed inset-0 z-50 flex transform items-center justify-center opacity-0 transition-all duration-50 lg:hidden"
     id="mobile-menu"
     role="dialog"
     aria-modal="true"
   >
     <div
-      class="flex flex-col gap-4 rounded-2xl border border-white/40 bg-gradient-to-br from-white/15 to-white/0 shadow-lg backdrop-blur-md"
+      class="flex h-screen w-full flex-col gap-4 bg-gradient-to-br from-purple-950/80 to-black shadow-lg backdrop-blur-md"
     >
-      <div class="flex flex-col items-center gap-5 pt-6 pb-4">
+      <div class="mt-6 flex justify-center p-2">
+        <button
+          type="button"
+          id="mobile-close-button"
+          class="inline-flex items-center justify-center rounded-md p-2 text-white"
+          aria-label="Close Menu"
+        >
+          <svg class="size-10" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex flex-col items-center gap-8 py-16">
         {
           links.map(({ name, to }) => (
             <Link
               {to}
-              class="relative font-semibold text-white after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+              class="relative text-xl font-semibold text-white after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
             >
               {name}
             </Link>
           ))
         }
       </div>
-      <div class="flex flex-row items-center justify-center gap-6 border-t border-white/40 py-3">
-        {
-          socialLinks.map(({ icon, name, to }) => (
-            <Link {to} external class="inline-block transition-transform duration-300 hover:scale-110">
-              <img src={icon} alt={`Icono de ${name}`} class="size-8" />
-            </Link>
-          ))
-        }
+
+      <div class="mt-auto flex flex-col items-center justify-center gap-6 border-t border-white/30 py-6">
+        <div>
+          <span>Diseñado y desarrollado por Comuafor ❤️</span>
+        </div>
+        <div class="flex flex-row items-center justify-center gap-6">
+          {
+            socialLinks.map(({ icon, name, to }) => (
+              <Link {to} external class="inline-block transition-transform duration-300 hover:scale-110">
+                <img src={icon} alt={`Icono de ${name}`} class="size-8" />
+              </Link>
+            ))
+          }
+        </div>
       </div>
     </div>
   </div>
@@ -139,31 +169,40 @@ const socialLinks = [
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menu-toggle')
-    const hamburgerIcon = document.querySelector('.hamburger-icon')
-    const closeIcon = document.querySelector('.close-icon')
+    const mobileCloseButton = document.getElementById('mobile-close-button')
     const mobileMenu = document.getElementById('mobile-menu')
     const nav = document.querySelector('nav')
     const header = document.querySelector('header')
 
     let lastScrollY = window.scrollY
+    let isMenuOpen = false
 
-    if (menuToggle && hamburgerIcon && closeIcon && mobileMenu) {
-      let isMenuOpen = false
-
-      menuToggle.addEventListener('click', () => {
-        isMenuOpen = !isMenuOpen
-
-        mobileMenu.classList.toggle('opacity-0', !isMenuOpen)
-        mobileMenu.classList.toggle('scale-95', !isMenuOpen)
-        mobileMenu.classList.toggle('pointer-events-none', !isMenuOpen)
-        mobileMenu.classList.toggle('opacity-100', isMenuOpen)
-        mobileMenu.classList.toggle('scale-100', isMenuOpen)
-        mobileMenu.classList.toggle('pointer-events-auto', isMenuOpen)
-
-        hamburgerIcon.classList.toggle('hidden', isMenuOpen)
-        closeIcon.classList.toggle('hidden', !isMenuOpen)
-      })
+    const openMenu = () => {
+      isMenuOpen = true
+      mobileMenu.classList.remove('opacity-0', 'scale-95', 'pointer-events-none')
+      mobileMenu.classList.add('opacity-100', 'scale-100', 'pointer-events-auto')
+      document.body.classList.add('overflow-hidden')
     }
+
+    const closeMenu = () => {
+      isMenuOpen = false
+      mobileMenu.classList.add('opacity-0', 'scale-95', 'pointer-events-none')
+      mobileMenu.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto')
+      document.body.classList.remove('overflow-hidden')
+    }
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', openMenu)
+    }
+
+    if (mobileCloseButton) {
+      mobileCloseButton.addEventListener('click', closeMenu)
+    }
+
+    const mobileLinks = mobileMenu ? mobileMenu.querySelectorAll('a') : []
+    mobileLinks.forEach((link) => {
+      link.addEventListener('click', closeMenu)
+    })
 
     if (nav && header) {
       const initialMargin = 32
@@ -181,7 +220,7 @@ const socialLinks = [
 
         nav.style.marginTop = `${newMargin}px`
 
-        if (scrollingDown && scrollPosition > 100) {
+        if (scrollingDown && scrollPosition > 100 && !isMenuOpen) {
           header.classList.add('-translate-y-full')
         } else {
           header.classList.remove('-translate-y-full')
@@ -190,7 +229,6 @@ const socialLinks = [
       }
 
       handleScroll()
-
       window.addEventListener('scroll', handleScroll)
     }
   })
