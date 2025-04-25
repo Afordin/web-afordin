@@ -1,7 +1,103 @@
 ---
 import { languages } from '@/i18n/ui.ts'
-import Link from '@/components/Link.astro'
+// import EnglishFlag from '@/assets/flags/en.svg'
+// import SpanishFlag from '@/assets/flags/es.svg'
+const langs = Object.entries(languages)
 ---
+
+<div class="relative">
+  <select
+    id="language-selector"
+    class="cursor-pointer appearance-none rounded-full border border-white/20 bg-black/30 px-5 py-2 pr-10 text-white transition-all duration-300 outline-none hover:border-white/40 hover:bg-black/40 focus:ring-2 focus:ring-white/30"
+  >
+    {
+      langs.map(([lang, label]) => (
+        <option value={lang}>
+          {/* sporte de esta caracteristica solo en canary chrome 135 https://lenguajehtml.com/html/formularios/personalizar-etiqueta-select/ */}
+          {/* lang === 'es' ? <SpanishFlag class="rounded-full w-5 h-5" /> : <EnglishFlag class="rounded-full w-5 h-5" /> */}
+          {/* lang === 'es' ? <svg><use href="../../assets/flags/es.svg" /></svg> : <svg><use href="../../assets/flags/en.svg" /></svg> */}
+          {label}
+        </option>
+      ))
+    }
+  </select>
+  <div class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 transform text-xs text-white">▼</div>
+</div>
+
+<script>
+  import { $ } from '@/utils/dom.ts'
+
+  const $select = $<HTMLSelectElement>('#language-selector')
+
+  if (!$select) {
+    console.error('Language select not found')
+  }
+
+  $select?.addEventListener('change', function () {
+    const selectedLanguage = this.value
+    if (selectedLanguage === 'en') {
+      window.location.href = '/en'
+    } else {
+      window.location.href = '/'
+    }
+  })
+
+  // Establecer el valor inicial basado en la URL actual
+  document.addEventListener('DOMContentLoaded', function () {
+    const currentPath = window.location.pathname
+    if ($select) {
+      if (currentPath.startsWith('/en')) {
+        $select.value = 'en'
+      } else {
+        $select.value = 'es'
+      }
+    }
+  })
+</script>
+
+<!--
+<style>
+  select {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  select:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  select:focus {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+
+  .select-container::after {
+    content: '▼';
+    font-size: 12px;
+    color: white;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  option {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 10px;
+  }
+</style>
+
 
 <ul class="flex flex-row justify-center gap-2 lg:justify-start">
   {
@@ -10,3 +106,4 @@ import Link from '@/components/Link.astro'
     ))
   }
 </ul>
+-->
