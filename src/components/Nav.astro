@@ -1,9 +1,10 @@
 ---
 import { getLangFromUrl, useTranslations } from '@/i18n/utils'
 import Link from '@/components/Link.astro'
-import Github from '../assets/Github.svg?url'
-import Discord from '../assets/Discord.svg?url'
-import Logo from '../assets/Logo.svg?url'
+// import SelectLanguage from '@/components/ui/SelectLanguage.astro'
+import Github from '@/assets/Github.svg?url'
+import Discord from '@/assets/Discord.svg?url'
+import Logo from '@/assets/Logo.svg?url'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -89,6 +90,8 @@ const socialLinks = [
       }
     </div>
 
+    <!-- <SelectLanguage /> -->
+
     <!-- Social media icons for large screens -->
     <div class="hidden items-center justify-center gap-4 lg:flex">
       {
@@ -137,13 +140,15 @@ const socialLinks = [
 </header>
 
 <script>
+  import { $ } from '@/utils/dom.ts'
+
   document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById('menu-toggle')
-    const hamburgerIcon = document.querySelector('.hamburger-icon')
-    const closeIcon = document.querySelector('.close-icon')
-    const mobileMenu = document.getElementById('mobile-menu')
-    const nav = document.querySelector('nav')
-    const header = document.querySelector('header')
+    const menuToggle = $<HTMLButtonElement>('#menu-toggle')
+    const hamburgerIcon = $<SVGSVGElement>('.hamburger-icon')
+    const closeIcon = $<SVGSVGElement>('.close-icon')
+    const mobileMenu = $('#mobile-menu')
+    const nav = $('nav')
+    const header = $('header')
 
     let lastScrollY = window.scrollY
 
