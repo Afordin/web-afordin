@@ -10,5 +10,7 @@
  * const $elementId = $('.myId')
  * ```
  */
-export const $ = <T extends HTMLElement>(selector: string, context: Document | HTMLElement = document): T | null =>
-  context.querySelector<T>(selector)
+export const $ = <T extends HTMLElement | SVGSVGElement>(
+  selector: string,
+  context: Document | HTMLElement | SVGSVGElement = document,
+): T | null => context.querySelector<T>(selector)
