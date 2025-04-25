@@ -179,15 +179,19 @@ const socialLinks = [
 
     const openMenu = () => {
       isMenuOpen = true
-      mobileMenu.classList.remove('opacity-0', 'scale-95', 'pointer-events-none')
-      mobileMenu.classList.add('opacity-100', 'scale-100', 'pointer-events-auto')
+      if (mobileMenu) {
+        mobileMenu.classList.remove('opacity-0', 'scale-95', 'pointer-events-none')
+        mobileMenu.classList.add('opacity-100', 'scale-100', 'pointer-events-auto')
+      }
       document.body.classList.add('overflow-hidden')
     }
 
     const closeMenu = () => {
       isMenuOpen = false
-      mobileMenu.classList.add('opacity-0', 'scale-95', 'pointer-events-none')
-      mobileMenu.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto')
+      if (mobileMenu) {
+        mobileMenu.classList.add('opacity-0', 'scale-95', 'pointer-events-none')
+        mobileMenu.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto')
+      }
       document.body.classList.remove('overflow-hidden')
     }
 
