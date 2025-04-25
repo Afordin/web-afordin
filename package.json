@@ -44,5 +44,15 @@
     "prettier-plugin-tailwindcss": "0.6.11",
     "simple-git-hooks": "2.12.1",
     "tailwindcss": "4.1.4"
-  }
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "simple-git-hooks"
+    ],
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "packageManager": "pnpm@10.9.0+sha1.aa4a6bfc002fd508e5643944fb46f2ad64eb8b95"
 }
