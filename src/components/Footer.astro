@@ -8,7 +8,6 @@ import Discord from '@/assets/Discord.svg'
 import Youtube from '@/assets/Youtube.svg'
 import Twitch from '@/assets/Twitch.svg'
 import { getLangFromUrl, useTranslations } from '@/i18n/utils'
-import SelectLanguage from './ui/SelectLanguage.astro'
 import Link from '@/components/Link.astro'
 
 let dataDevs: Array<Contributor> = []
@@ -67,7 +66,6 @@ const links = [
           ))
         }
       </ul>
-      <!-- <SelectLanguage /> -->
       <div class="flex flex-col gap-2">
         <p class="text-sm">
           {t('footer.paragraph.designed')}
@@ -117,7 +115,7 @@ const links = [
             dataDevs?.length > 0 ? (
               <FooterContributors contributors={dataDevs} />
             ) : (
-              <p class="text-sm text-white">Contribuidores no disponibles en este momento</p>
+              <p class="text-sm text-white">{t('footer.paragraph.contributtors.error')}</p>
             )
           }
         </div>

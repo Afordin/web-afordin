@@ -1,5 +1,9 @@
 ---
 import Link from './Link.astro'
+import { getLangFromUrl, useTranslations } from '@/i18n/utils.ts'
+
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
 <section
@@ -7,8 +11,8 @@ import Link from './Link.astro'
 >
   <div class="absolute -top-[80px] left-0 z-20 h-[80px] w-full bg-linear-to-b from-[#100e14] to-[#09090b]"></div>
   <hgroup class="flex flex-col items-center gap-4 pt-[236px]">
-    <h2 class="font-calsans text-7xl tracking-[2.5px]">¿A qué estás esperando?</h2>
-    <p class="text-xl">Descubre lo que podemos crear juntos</p>
+    <h2 class="font-calsans text-7xl tracking-[2.5px]">{t('finalCTA.title')}</h2>
+    <p class="text-xl">{t('finalCTA.paragraph')}</p>
   </hgroup>
-  <Link external asButton to="https://discord.com/invite/comuafor">¡Empezar a crear!</Link>
+  <Link external asButton to="https://discord.com/invite/comuafor">{t('finalCTA.button')}</Link>
 </section>
