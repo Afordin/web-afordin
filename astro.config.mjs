@@ -4,6 +4,13 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          assetFileNames: '_astro/[name].[ext]',
+        },
+      },
+    },
   },
   experimental: {
     fonts: [
