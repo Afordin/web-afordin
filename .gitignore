@@ -36,3 +36,6 @@ yarn.lock
 
 # bun
 bun.lockb
+
+# placeholders data
+src/data/placeholders.json
