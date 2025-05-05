@@ -1,0 +1,46 @@
+---
+import type { GetImageResult } from 'astro'
+
+import { getPlaceholder } from '@/utils/getPlaceholder'
+import { getImage } from '@/utils/getImage'
+
+import { Image as AstroImage } from 'astro:assets'
+
+interface Props {
+  src: string
+  alt: string
+  class?: string
+}
+
+const { src, alt, class: className, ...rest } = Astro.props
+
+let image: GetImageResult['src'] | null = null
+let placeholder: GetImageResult['src'] | null = null
+
+try {
+  image = (await getImage({ src })) as GetImageResult['src']
+  const placeholderResult = await getPlaceholder(image)
+  placeholder = typeof placeholderResult === 'string' ? placeholderResult : null
+} catch (error) {
+  console.error('Error loading image or placeholder:', error)
+}
+---
+
+<div class="relative overflow-hidden">
+  <AstroImage
+    src={placeholder || ''}
+    alt={`${alt} - placeholder`}
+    inferSize
+    class="pointer-events-none absolute inset-0 h-full w-full transform opacity-100 blur-sm transition-opacity duration-300 ease-in-out"
+    aria-hidden="true"
+  />
+
+  <AstroImage
+    src={image || ''}
+    alt={alt}
+    class:list={['h-auto w-full object-cover opacity-0 transition-opacity duration-300 ease-in-out', className]}
+    onload="this.classList.remove('opacity-0'); this.previousElementSibling.classList.replace('opacity-100', 'opacity-0')"
+    inferSize
+    {...rest}
+  />
+</div>
