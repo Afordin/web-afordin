@@ -1,7 +1,7 @@
 ---
-import SaluteHand from '@/components/SaluteHand.astro'
-import { getLangFromUrl, useTranslations } from '@/i18n/utils'
 import Link from '@/components/Link.astro'
+import Icon from '@/components/Icon.astro'
+import { getLangFromUrl, useTranslations } from '@/i18n/utils.ts'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -9,13 +9,15 @@ const t = useTranslations(lang)
 
 <section id="home" class="relative z-20 flex min-h-screen w-full flex-col items-center justify-center gap-11 pt-32">
   <div
-    class="pointer-events-none absolute inset-0 h-full w-full bg-linear-to-b from-transparent from-65% to-[#100E14] to-95%"
+    class="pointer-events-none absolute inset-0 h-full w-full bg-linear-to-b from-transparent from-65% to-[#EDEDED] to-95% dark:to-[#100E14]"
   >
   </div>
-  <div class="animation rounded-full bg-linear-(--gradient-rainbow) p-[2px]">
-    <div class="group flex items-center gap-3 rounded-full bg-[#100d13] px-5 py-1 text-base">
+  <div class="animation rounded-full bg-linear-(--gradient-rainbow) p-0.5">
+    <div
+      class="group text-primary flex items-center gap-3 rounded-full bg-white px-5 py-1 text-base dark:bg-[#100d13] dark:text-white"
+    >
       <p class="font-manrope font-medium">{t('hero.welcome')} <span class="font-bold">Afordin</span></p>
-      <SaluteHand extraClass="group-hover:animate-salute" />
+      <Icon name="saludate-hand" class="group-hover:animate-salute text-primary h-5 w-4 dark:text-[#FAFAFA]" />
     </div>
   </div>
   <hgroup class="flex flex-col gap-11 px-2 text-center drop-shadow-[0px_4px_13px_rgba(0,0,0,0.25)] lg:px-0">
