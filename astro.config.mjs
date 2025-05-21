@@ -1,7 +1,10 @@
-import { defineConfig, fontProviders } from 'astro/config'
+import icon from 'astro-icon'
 import tailwindcss from '@tailwindcss/vite'
+import { iconTyping } from './scripts/integrations.ts'
+import { defineConfig, fontProviders } from 'astro/config'
 
 export default defineConfig({
+  integrations: [icon(), iconTyping()],
   vite: {
     plugins: [tailwindcss()],
   },

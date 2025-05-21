@@ -23,7 +23,9 @@ const lang = getLangFromUrl(Astro.url)
   </head>
   <body class="relative">
     <SquarePattern />
-    <div class="font-manrope flex w-full flex-col items-center bg-[var(--color-primary)] text-white">
+    <div
+      class="font-manrope dark:bg-primary text-primary flex w-full flex-col items-center bg-[#EDEDED] dark:text-white"
+    >
       <slot />
     </div>
   </body>
