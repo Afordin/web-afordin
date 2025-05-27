@@ -14,7 +14,7 @@ let cachedSubscribers: SubscriberData | null = null
 
 // Cache configuration
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
-const STALE_WHILE_REVALIDATE = 10 * 60 * 1000 // 10 minutes
+const STALE_WHILE_REVALIDATE = 20 * 60 * 1000 // 20 minutes
 
 export function getCachedSubscribers(): SubscriberData | null {
   if (!cachedSubscribers) {
