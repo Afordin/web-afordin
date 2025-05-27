@@ -188,7 +188,7 @@ Twitch API error: 429 – Rate limit exceeded
 ```
 
 #### Características avanzadas
-- **Cache inteligente**: 5 minutos de duración, 10 minutos stale
+- **Cache inteligente**: 5 minutos de duración, 20 minutos stale
 - **Fallback resiliente**: Sirve datos stale si falla el refresh
 - **Enrichment de datos**: Combina suscripciones con perfiles de usuario
 - **Procesamiento por chunks**: Maneja múltiples usuarios (hasta 100 por request)
@@ -283,7 +283,7 @@ if (data._cache_info.from_cache) {
   },
   "timing": {
     "cache_duration_minutes": 5,
-    "stale_threshold_minutes": 10,
+    "stale_threshold_minutes": 20,
     "remaining_time_formatted": "3m 0s"
   }
 }
@@ -292,7 +292,7 @@ if (data._cache_info.from_cache) {
 #### Propiedades importantes
 - `hasCachedData`: Si existe información en cache
 - `isExpired`: Si el cache ya no es válido (>5 min)
-- `isStale`: Si está obsoleto pero utilizable (>10 min)
+- `isStale`: Si está obsoleto pero utilizable (>20 min)
 - `remainingTime`: Milisegundos hasta expiración
 
 #### Casos de uso
@@ -317,13 +317,13 @@ if (status.recommendations.should_refresh) {
 ### Configuración actual
 ```javascript
 const CACHE_DURATION = 5 * 60 * 1000;      // 5 minutos válido
-const STALE_WHILE_REVALIDATE = 10 * 60 * 1000; // 10 minutos stale
+const STALE_WHILE_REVALIDATE = 20 * 60 * 1000; // 20 minutos stale
 ```
 
 ### Comportamiento del cache
 1. **Fresh (0-5 min)**: Servido inmediatamente desde memoria
-2. **Expired (5-10 min)**: Nueva consulta a Twitch API
-3. **Stale (>10 min)**: Cache inválido, siempre consulta API
+2. **Expired (5-20 min)**: Nueva consulta a Twitch API
+3. **Stale (>20 min)**: Cache inválido, siempre consulta API
 4. **Error fallback**: Si falla API pero hay cache stale, lo sirve
 
 ### Ventajas
