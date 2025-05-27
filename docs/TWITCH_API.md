@@ -343,7 +343,6 @@ TWITCH_REFRESH_TOKEN=qkstc5zyjeiphutuzspuyxv56g3qw72eh9w07h9i9zzefdzxht
 
 ### En producción (Netlify Blobs)
 - Almacenamiento persistente en Netlify Blobs
-- Configuración via `/api/twitch/setup-production`
 
 ### Refresh automático
 El sistema maneja automáticamente:
@@ -371,7 +370,6 @@ El sistema maneja automáticamente:
 1. Configurar variables en Netlify (CLIENT_ID, CLIENT_SECRET)
 2. Visitar https://tudominio.com/api/twitch/login
 3. Autorizar aplicación
-4. Usar /api/twitch/setup-production para guardar refresh token
 5. Verificar con /api/twitch/status
 ```
 
