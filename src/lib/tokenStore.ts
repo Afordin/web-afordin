@@ -1,15 +1,15 @@
 import { getStore } from '@netlify/blobs'
 
-// Cache en memoria para desarrollo y optimización
+// In-memory cache for development and optimization
 let storedRefreshToken: string | null = null
 let storedAccessToken: string | null = null
 let tokenExpiry: number | null = null
 
-// Detectar si estamos en producción (Netlify)
+// Detect if we're in production (Netlify)
 const isProduction = import.meta.env.PROD
 const isDevelopment = !isProduction
 
-// Para producción: usa Netlify Blobs
+// For production: use Netlify Blobs
 const tokenStore = isProduction ? getStore('twitch-tokens') : null
 
 interface TokenData {
@@ -19,13 +19,11 @@ interface TokenData {
 }
 
 export async function getRefreshToken(): Promise<string> {
-  // Primero intenta obtenerlo de memoria
   if (storedRefreshToken) {
     return storedRefreshToken
   }
 
   if (isDevelopment) {
-    // En desarrollo, usa variables de entorno
     const token = import.meta.env.TWITCH_REFRESH_TOKEN
     if (!token) {
       throw new Error('No refresh token available. Please authenticate first at /api/twitch/login')
@@ -33,7 +31,7 @@ export async function getRefreshToken(): Promise<string> {
     storedRefreshToken = token
     return token
   } else {
-    // En producción, usa Netlify Blobs
+    // In production, use Netlify Blobs
     try {
       const dataText = await tokenStore?.get('tokens')
       if (!dataText) {
@@ -56,7 +54,7 @@ export async function setRefreshToken(token: string): Promise<void> {
 
   if (isProduction && tokenStore) {
     try {
-      // Obtener datos existentes
+      // Get existing data
       let existingData: TokenData = {}
       try {
         const existingText = await tokenStore.get('tokens')
@@ -64,10 +62,10 @@ export async function setRefreshToken(token: string): Promise<void> {
           existingData = JSON.parse(existingText as string) as TokenData
         }
       } catch {
-        // Si no existe o hay error, usar objeto vacío
+        // If it doesn't exist or there's an error, use empty object
       }
 
-      // Actualizar con el nuevo refresh token
+      // Update with new refresh token
       const tokenData: TokenData = {
         ...existingData,
         refreshToken: token,
@@ -82,11 +80,11 @@ export async function setRefreshToken(token: string): Promise<void> {
 
 export async function setAccessToken(token: string, expiresIn: number): Promise<void> {
   storedAccessToken = token
-  tokenExpiry = Date.now() + expiresIn * 1000 - 60000 // 1 minuto de buffer
+  tokenExpiry = Date.now() + expiresIn * 1000 - 60000 // 1 minute buffer
 
   if (isProduction && tokenStore) {
     try {
-      // Obtener datos existentes
+      // Get existing data
       let existingData: TokenData = {}
       try {
         const existingText = await tokenStore.get('tokens')
@@ -94,10 +92,10 @@ export async function setAccessToken(token: string, expiresIn: number): Promise<
           existingData = JSON.parse(existingText as string) as TokenData
         }
       } catch {
-        // Si no existe o hay error, usar objeto vacío
+        // If it doesn't exist or there's an error, use empty object
       }
 
-      // Actualizar con el nuevo access token
+      // Update with new access token
       const tokenData: TokenData = {
         ...existingData,
         accessToken: token,
@@ -112,7 +110,7 @@ export async function setAccessToken(token: string, expiresIn: number): Promise<
 }
 
 export async function getStoredAccessToken(): Promise<string | null> {
-  // Verificar token en memoria primero
+  // Verify in-memory token first
   if (storedAccessToken && tokenExpiry && Date.now() < tokenExpiry) {
     return storedAccessToken
   }

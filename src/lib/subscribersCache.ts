@@ -1,5 +1,5 @@
-// Sistema de cache para suscriptores de Twitch
-// Evita rate limiting y mejora la performance
+// Twitch subscribers cache system
+// Prevents rate limiting and improves performance
 
 interface SubscriberData {
   user_id: string
@@ -9,12 +9,12 @@ interface SubscriberData {
   expires_at: number
 }
 
-// Cache en memoria
+// In-memory cache
 let cachedSubscribers: SubscriberData | null = null
 
-// Configuración del cache
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutos
-const STALE_WHILE_REVALIDATE = 10 * 60 * 1000 // 10 minutos
+// Cache configuration
+const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+const STALE_WHILE_REVALIDATE = 10 * 60 * 1000 // 10 minutes
 
 export function getCachedSubscribers(): SubscriberData | null {
   if (!cachedSubscribers) {
@@ -23,7 +23,7 @@ export function getCachedSubscribers(): SubscriberData | null {
 
   const now = Date.now()
 
-  // Si está expirado, no lo devuelve
+  // If it's expired, don't return it
   if (now > cachedSubscribers.expires_at) {
     cachedSubscribers = null
     return null

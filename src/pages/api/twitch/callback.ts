@@ -11,7 +11,7 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   if (!code) {
-    return new Response('Falta el código de Twitch', { status: 400 })
+    return new Response('Missing Twitch code', { status: 400 })
   }
 
   const params = new URLSearchParams({
@@ -30,20 +30,20 @@ export const GET: APIRoute = async ({ request }) => {
 
   if (!tokenRes.ok) {
     const err = await tokenRes.text()
-    return new Response(`Error obteniendo token: ${tokenRes.status} – ${err}`, { status: 502 })
+    return new Response(`Error getting token: ${tokenRes.status} – ${err}`, { status: 502 })
   }
 
   const { access_token, refresh_token, expires_in, scope } = await tokenRes.json()
 
-  // Validar que tenemos los scopes necesarios
+  // Validate that we have the necessary scopes
   const requiredScopes = ['channel:read:subscriptions']
   const missingScopes = requiredScopes.filter((s) => !scope.includes(s))
 
   if (missingScopes.length > 0) {
-    return new Response(`Faltan permisos: ${missingScopes.join(', ')}`, { status: 403 })
+    return new Response(`Missing permissions: ${missingScopes.join(', ')}`, { status: 403 })
   }
 
-  // Guardar tokens en memoria
+  // Save tokens in memory
   await setRefreshToken(refresh_token)
   await setAccessToken(access_token, expires_in)
 

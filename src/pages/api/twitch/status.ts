@@ -8,7 +8,7 @@ export const GET: APIRoute = async () => {
     const isProduction = import.meta.env.PROD
     const environment = isProduction ? 'Production' : 'Development'
 
-    // Verificar si tenemos refresh token
+    // Check if we have refresh token
     let hasRefreshToken = false
     let refreshTokenSource = 'none'
 
@@ -20,11 +20,11 @@ export const GET: APIRoute = async () => {
       hasRefreshToken = false
     }
 
-    // Verificar si tenemos access token válido
+    // Check if we have valid access token
     const accessToken = await getStoredAccessToken()
     const hasValidAccessToken = !!accessToken
 
-    // Si tenemos refresh token, intentar obtener un access token
+    // If we have refresh token, try to get an access token
     let canGetAccessToken = false
     let tokenError = null
 
@@ -52,15 +52,15 @@ export const GET: APIRoute = async () => {
       nextSteps: [] as string[],
     }
 
-    // Determinar los siguientes pasos
+    // Determine next steps
     if (!hasRefreshToken) {
-      status.nextSteps.push('1. Visita /api/twitch/login para autenticarte')
-      status.nextSteps.push('2. Copia el refresh_token al archivo .env')
+      status.nextSteps.push('1. Visit /api/twitch/login to authenticate')
+      status.nextSteps.push('2. Copy refresh_token to .env file')
     } else if (!canGetAccessToken) {
-      status.nextSteps.push('1. Verifica que el refresh_token en .env sea válido')
-      status.nextSteps.push('2. Si no funciona, re-autentica en /api/twitch/login')
+      status.nextSteps.push('1. Verify that refresh_token in .env is valid')
+      status.nextSteps.push("2. If it doesn't work, re-authenticate at /api/twitch/login")
     } else {
-      status.nextSteps.push('✅ Todo listo! Puedes usar /api/twitch/subscribers')
+      status.nextSteps.push('✅ All ready! You can use /api/twitch/subscribers')
     }
 
     return new Response(
@@ -88,15 +88,15 @@ export const GET: APIRoute = async () => {
         <h1>🔧 Twitch Integration Status</h1>
         
         <div class="status ${hasRefreshToken ? 'success' : 'error'}">
-          <strong>Refresh Token:</strong> ${hasRefreshToken ? '✅ Disponible' : '❌ No encontrado'}
+          <strong>Refresh Token:</strong> ${hasRefreshToken ? '✅ Available' : '❌ Not found'}
         </div>
         
         <div class="status ${hasValidAccessToken ? 'success' : 'warning'}">
-          <strong>Access Token:</strong> ${hasValidAccessToken ? '✅ Válido en memoria' : '⚠️ No hay token válido en memoria'}
+          <strong>Access Token:</strong> ${hasValidAccessToken ? '✅ Valid in memory' : '⚠️ No valid token in memory'}
         </div>
         
         <div class="status ${canGetAccessToken ? 'success' : 'error'}">
-          <strong>API Funcional:</strong> ${canGetAccessToken ? '✅ Puede obtener suscriptores' : '❌ Error al obtener datos'}
+          <strong>API Functional:</strong> ${canGetAccessToken ? '✅ Can get subscribers' : '❌ Error getting data'}
         </div>
         
         ${

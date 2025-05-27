@@ -4,7 +4,7 @@ import type { APIRoute } from 'astro'
 
 export const prerender = false
 
-// Utilidad para dividir en bloques de 100
+// Utility to split into chunks of 100
 function chunkArray<T>(array: T[], size: number): T[][] {
   const chunks: T[][] = []
   for (let i = 0; i < array.length; i += size) {
@@ -14,7 +14,7 @@ function chunkArray<T>(array: T[], size: number): T[][] {
 }
 
 async function fetchAccessToken(): Promise<string> {
-  // Primero verifica si ya tenemos un token válido en memoria
+  // First check if we already have a valid token in memory
   const storedToken = await getStoredAccessToken()
   if (storedToken) {
     return storedToken
@@ -38,23 +38,23 @@ async function fetchAccessToken(): Promise<string> {
   if (!res.ok) {
     const txt = await res.text()
     console.error('Error refreshing token:', { status: res.status, body: txt })
-    throw new Error(`Error refrescando token: ${res.status} – ${txt}`)
+    throw new Error(`Error refreshing token: ${res.status} – ${txt}`)
   }
 
   const { access_token, expires_in } = await res.json()
 
-  // Guardar el nuevo token
+  // Save the new token
   await setAccessToken(access_token, expires_in || 3600)
 
   return access_token as string
 }
 
 export const GET: APIRoute = async ({ request }) => {
-  // Verificar si tenemos datos en cache válidos
+  // Check if we have valid cached data
   const cachedData = getCachedSubscribers()
   const cacheInfo = getCacheInfo()
 
-  // Si hay parámetro 'force=true', omitir cache
+  // If there's a 'force=true' parameter, skip cache
   const requestUrl = new URL(request.url)
   const forceRefresh = requestUrl.searchParams.get('force') === 'true'
 
@@ -72,7 +72,7 @@ export const GET: APIRoute = async ({ request }) => {
         status: 200,
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=60', // Cache en navegador por 1 minuto
+          'Cache-Control': 'public, max-age=60', // Cache in browser for 1 minute
         },
       },
     )
@@ -82,7 +82,7 @@ export const GET: APIRoute = async ({ request }) => {
   try {
     token = await fetchAccessToken()
   } catch (err: any) {
-    // Si falla el token pero tenemos cache (aunque expirado), devolver cache
+    // If token fails but we have cache (even if expired), return cache
     if (cachedData) {
       return new Response(
         JSON.stringify({
@@ -102,7 +102,7 @@ export const GET: APIRoute = async ({ request }) => {
     return new Response(`Token refresh failed: ${err.message}`, { status: 500 })
   }
 
-  // Validamos el token y extraemos el user_id
+  // Validate token and extract user_id
   const validate = await fetch('https://id.twitch.tv/oauth2/validate', {
     headers: { Authorization: `Bearer ${token}` },
   })
@@ -112,7 +112,7 @@ export const GET: APIRoute = async ({ request }) => {
 
   const { user_id, ...rest } = await validate.json()
 
-  // Obtenemos los suscriptores
+  // Get the subscribers
   const url = new URL('https://api.twitch.tv/helix/subscriptions')
   url.searchParams.set('broadcaster_id', user_id)
   url.searchParams.set('first', '100')
@@ -131,7 +131,7 @@ export const GET: APIRoute = async ({ request }) => {
 
   const { data: subs } = await subsRes.json()
 
-  // Extraemos los IDs de los suscriptores
+  // Extract subscriber IDs
   const userIds = subs.map((sub: any) => sub.user_id)
   const chunks = chunkArray(userIds, 100)
 
@@ -156,14 +156,14 @@ export const GET: APIRoute = async ({ request }) => {
     })
   }
 
-  // Mezclamos los datos de suscripción con las imágenes de perfil
+  // Merge subscription data with profile images
   const enrichedSubs = subs.map((sub: any) => ({
     ...sub,
     profile_image_url: enrichedUsers[sub.user_id]?.profile_image_url ?? null,
     display_name: enrichedUsers[sub.user_id]?.display_name ?? sub.user_name,
   }))
 
-  // Crear objeto de respuesta
+  // Create response object
   const responseData = {
     user_id,
     ...rest,
@@ -171,7 +171,7 @@ export const GET: APIRoute = async ({ request }) => {
     total_count: enrichedSubs.length,
   }
 
-  // Guardar en cache
+  // Save to cache
   setCachedSubscribers(responseData)
 
   return new Response(
@@ -186,7 +186,7 @@ export const GET: APIRoute = async ({ request }) => {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=60', // Cache en navegador por 1 minuto
+        'Cache-Control': 'public, max-age=60', // Cache in browser for 1 minute
       },
     },
   )
