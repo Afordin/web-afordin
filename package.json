@@ -23,10 +23,11 @@
     ]
   },
   "dependencies": {
+    "@astrojs/netlify": "6.3.0",
+    "@netlify/blobs": "9.1.2",
     "astro": "5.7.4",
     "clsx": "2.1.1",
-    "tailwind-merge": "3.2.0",
-    "@astrojs/netlify": "6.3.0"
+    "tailwind-merge": "3.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.4",
