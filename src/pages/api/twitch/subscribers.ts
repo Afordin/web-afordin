@@ -110,7 +110,7 @@ export const GET: APIRoute = async ({ request }) => {
     return new Response('Invalid access token', { status: 401 })
   }
 
-  const { user_id, ...rest } = await validate.json()
+  const { user_id } = await validate.json()
 
   // Get all subscribers using pagination
   let allSubs: any[] = []
@@ -182,7 +182,6 @@ export const GET: APIRoute = async ({ request }) => {
   // Create response object
   const responseData = {
     user_id,
-    ...rest,
     subscribers: enrichedSubs,
     total_count: enrichedSubs.length,
   }
