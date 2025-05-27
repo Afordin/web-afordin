@@ -1,44 +1,78 @@
 ---
 import FooterContributors from './FooterContributors.astro'
-import FooterDesignersContributors from './FooterDesignersContributors.astro'
 import type { Contributor } from '@/types/index.d'
+import { fetchGithub } from '../utils/fetchGithub'
 import { designersData } from '@/data/designersData'
 import Discord from '@/assets/Discord.svg'
 import Youtube from '@/assets/Youtube.svg'
 import Twitch from '@/assets/Twitch.svg'
 import { getLangFromUrl, useTranslations } from '@/i18n/utils'
-import SelectLanguage from './ui/SelectLanguage.astro'
+// import SelectLanguage from './ui/SelectLanguage.astro'
 import Link from '@/components/Link.astro'
 
-const response = await fetch(`https://api.github.com/repos/Afordin/web-afordin/contributors`)
-const dataDevs: Array<Contributor> = await response.json()
+let dataDevs: Array<Contributor> = []
+
+dataDevs = await fetchGithub('Afordin/web-afordin')
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
+
+const links = [
+  {
+    href: '#inicio',
+    name: t('footer.ul.home'),
+  },
+  {
+    href: '#nuestros-valores',
+    name: t('footer.ul.ourValues'),
+  },
+  {
+    href: '#sobre-nosotros',
+    name: t('footer.ul.aboutUs'),
+  },
+  {
+    href: '#eventos',
+    name: t('footer.ul.events'),
+  },
+  {
+    href: '#comunidad',
+    name: t('footer.ul.community'),
+  },
+  {
+    href: '#patrocinadores',
+    name: t('footer.ul.sponsors'),
+  },
+]
 ---
 
 <footer
-  class="box-border flex w-full justify-center py-24"
+  class="box-border flex w-full justify-center py-16"
   style="background-image: linear-gradient(to bottom, #0E0F19, #271021, #2F1222, #5C353E);"
 >
   <div class="flex w-full max-w-7xl flex-col-reverse px-4 py-4 lg:flex-row 2xl:px-0">
-    <div class="flex w-full flex-col gap-[36px] border-[#989898] text-center lg:border-r-2 lg:pr-14 lg:text-left">
+    <div class="flex w-full flex-col gap-[36px] border-[#483342] text-center lg:border-r-1 lg:pr-14 lg:text-left">
       <img src="./svg/afordin.svg" alt="afordin" class="mx-auto h-[33px] w-[218px] lg:mx-0" />
-      <ul class="flex flex-col gap-3 text-lg">
-        <li><Link to="#inicio" class="hover:text-[#BF4D73]">{t('footer.ul.home')}</Link></li>
-        <li><Link to="#nuestros-valores" class="hover:text-[#BF4D73]">{t('footer.ul.ourValues')}</Link></li>
-        <li><Link to="#sobre-nosotros" class="hover:text-[#BF4D73]">{t('footer.ul.aboutUs')}</Link></li>
-        <li><Link to="#eventos" class="hover:text-[#BF4D73]">{t('footer.ul.events')}</Link></li>
-        <li><Link to="#comunidad" class="hover:text-[#BF4D73]">{t('footer.ul.community')}</Link></li>
-        <li><Link to="#patrocinadores" class="hover:text-[#BF4D73]">{t('footer.ul.sponsors')}</Link></li>
+      <ul class="flex flex-col gap-3 text-base">
+        {
+          links.map((link) => (
+            <li>
+              <Link
+                to={link.href}
+                class="relative font-semibold text-white after:absolute after:-bottom-0.5 after:left-1/2 after:h-0.5 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))
+        }
       </ul>
-      <SelectLanguage />
+      <!-- <SelectLanguage /> -->
       <div class="flex flex-col gap-2">
         <p class="text-sm">
           {t('footer.paragraph.designed')}
           <Link
             to="https://discord.com/invite/comuafor"
-            class="relative font-semibold text-white no-underline underline-offset-4 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 after:ease-in-out after:content-[''] hover:after:w-full"
+            class="relative font-semibold text-white no-underline underline-offset-4 after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-left after:bg-white after:transition-all after:duration-300 after:ease-in-out after:content-[''] hover:after:w-0"
           >
             Comuafor
           </Link>
@@ -47,6 +81,7 @@ const t = useTranslations(lang)
         <div class="flex justify-center gap-2 lg:justify-start">
           <Link
             external
+            aria-label="Discord logo icon"
             to="https://discord.com/invite/comuafor"
             class="grid h-9 w-9 place-items-center transition-all duration-500 ease-in-out hover:rotate-[360deg] hover:rounded-full hover:bg-[#5868F2]"
           >
@@ -54,6 +89,7 @@ const t = useTranslations(lang)
           </Link>
           <Link
             external
+            aria-label="Youtube logo icon"
             to="https://www.youtube.com/@afor_lives"
             class="grid h-9 w-9 place-items-center transition-all duration-500 ease-in-out hover:rotate-[360deg] hover:rounded-full hover:bg-[#C4302B]"
           >
@@ -61,6 +97,7 @@ const t = useTranslations(lang)
           </Link>
           <Link
             external
+            aria-label="Twitch logo icon"
             to="https://www.twitch.tv/afor_digital"
             class="grid h-9 w-9 place-items-center transition-all duration-500 ease-in-out hover:rotate-[360deg] hover:rounded-full hover:bg-[#6441A5]"
           >
@@ -69,54 +106,28 @@ const t = useTranslations(lang)
         </div>
       </div>
     </div>
-    <div class="flex w-full flex-col gap-8 pb-28 text-center lg:pb-0 lg:pl-14 lg:text-right">
-      <h2 class="text-xl">{t('footer.title')}</h2>
+    <div class="flex w-full flex-col justify-center gap-8 pb-28 text-center lg:pb-0 lg:pl-14 lg:text-right">
+      <!-- <h2 class="text-xl">{t('footer.title')}</h2> -->
       <div class="flex flex-col gap-6">
         <div class="contend-end flex flex-col items-center gap-4 lg:items-end">
-          <h3 class="text-lg">{t('footer.title.designer')}</h3>
-          <FooterDesignersContributors contributors={designersData} />
+          <h3 class="pr-8 text-base 2xl:pr-0">{t('footer.title.designer')}</h3>
+          <FooterContributors contributors={designersData} />
         </div>
         <div class="contend-end flex flex-col items-center gap-4 lg:items-end">
-          <h3 class="text-lg">{t('footer.title.developers')}</h3>
-          <FooterContributors contributors={dataDevs} />
-        </div>
-        <div class="contend-end flex flex-col items-center gap-4 lg:items-end">
-          <h3 class="text-lg">{t('footer.title.viewers')}</h3>
-          <div class="flex h-full w-fit flex-wrap items-center justify-end -space-x-3 hover:space-x-0">
-            <Link
-              external
-              to="https://www.linkedin.com/in/saramonrod/"
-              class="group relative transform transition-all duration-500 ease-in-out"
-            >
-              <img src="./avatar/ema-avatar.jpg" alt="EmaLozada" class="h-11 w-11 rounded-full shadow-inner" />
-              <div class="hidden group-hover:block">
-                <div
-                  class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm font-semibold text-white before:-top-2"
-                >
-                  <div class="flex items-center gap-1 rounded-sm bg-[#0072B1] px-3 py-[6px]">
-                    <svg
-                      width="13.5"
-                      height="13.5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      preserveAspectRatio="xMidYMid"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.907 39.907 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186l-.016 67.013ZM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009-.002-12.157 9.851-22.014 22.008-22.016 12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97v122.16ZM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453"
-                        fill="#ffffff"></path>
-                    </svg>
-                    <p class="whitespace-nowrap">EmaLozada</p>
-                  </div>
-                  <div class="h-0 w-fit border-t-8 border-r-8 border-l-8 border-transparent border-t-[#0072B1]"></div>
-                </div>
-              </div>
-            </Link>
-          </div>
+          <h3 class="pr-8 text-base 2xl:pr-0">{t('footer.title.developers')}</h3>
+          {
+            dataDevs?.length > 0 ? (
+              <FooterContributors contributors={dataDevs} />
+            ) : (
+              <p class="text-sm text-white">Contribuidores no disponibles en este momento</p>
+            )
+          }
         </div>
       </div>
     </div>
   </div>
 </footer>
+
 <style>
   footer {
     mask-image: linear-gradient(to bottom, transparent -10%, black 15%);

@@ -3,3 +3,5 @@ export interface Contributor {
   avatar_url: string
   html_url: string
 }
+
+export type contributorsIcons = 'linkedin' | 'github'

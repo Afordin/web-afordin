@@ -1,0 +1,49 @@
+---
+import type { contributorsIcons } from '@/types'
+import Link from '@/components/Link.astro'
+import LinkedIn from '@/assets/LinkedIn.svg'
+import GitHub from '@/assets/Github.svg'
+
+interface Props {
+  url: string
+  avatar: string
+  username: string
+  icon: contributorsIcons
+}
+
+const { url, avatar, username, icon } = Astro.props
+
+const AVATARS_CONFIG = {
+  linkedin: {
+    component: LinkedIn,
+    colors: 'bg-[#0072B1] text-white',
+    borderTop: 'border-t-[#0072B1]',
+  },
+  github: {
+    component: GitHub,
+    colors: 'bg-white text-[#111111]',
+    borderTop: 'border-t-white',
+  },
+}
+
+const { component: Icon, colors, borderTop } = AVATARS_CONFIG[icon]
+---
+
+<Link class="group relative transform transition-all duration-500 ease-in-out" to={url} external>
+  <img
+    src={avatar}
+    alt={username}
+    class="h-11 w-11 rounded-full border border-white object-cover shadow-inner transition-transform duration-200 group-hover:relative group-hover:z-10 group-hover:scale-115"
+    width={44}
+    height={44}
+  />
+  <div
+    class="pointer-events-none absolute top-0 left-1/2 z-50 flex -translate-x-1/2 -translate-y-10 flex-col items-center rounded-sm text-center text-sm font-semibold opacity-0 transition-all duration-300 group-hover:-translate-y-12 group-hover:opacity-100"
+  >
+    <div class:list={['flex items-center gap-1 rounded-sm px-3 py-1.5', colors]}>
+      <Icon width={13} height={13} />
+      <p class="whitespace-nowrap">{username}</p>
+    </div>
+    <div class:list={['h-0 w-fit border-t-8 border-r-8 border-l-8 border-transparent', borderTop]}></div>
+  </div>
+</Link>

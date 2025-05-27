@@ -3,12 +3,34 @@ import Link from './Link.astro'
 ---
 
 <section
-  class="relative z-10 flex h-auto min-h-[1024px] w-full flex-col items-center gap-10 bg-[url('/footer.webp')] text-center"
+  class="relative z-10 mt-24 flex aspect-video w-full flex-col items-center gap-10 pt-24 text-center lg:pt-40 xl:pt-48 2xl:pt-80"
 >
-  <div class="absolute -top-[80px] left-0 z-20 h-[80px] w-full bg-linear-to-b from-[#100e14] to-[#09090b]"></div>
-  <hgroup class="flex flex-col items-center gap-4 pt-[236px]">
-    <h2 class="font-aeonik text-7xl">¿A qué estás esperando?</h2>
-    <p class="text-xl">Descubre lo que podemos crear juntos</p>
+  <hgroup class="flex flex-col items-center gap-4 text-shadow-lg/20">
+    <h2 class="font-calsans text-5xl tracking-[2.5px] xl:text-7xl">¿A qué estás esperando?</h2>
+    <p class="text-base xl:text-xl">Descubre lo que podemos crear juntos</p>
   </hgroup>
-  <Link external asButton to="https://discord.com/invite/comuafor">¡Empezar a crear!</Link>
+  <Link
+    class="px-6 py-3 text-base font-semibold shadow-md/25"
+    external
+    asButton
+    to="https://discord.com/invite/comuafor">¡Empezar a crear!</Link
+  >
+  <video
+    class="pointer-events-none top-0 left-0 -z-10 aspect-video w-full md:absolute md:mask-none"
+    src="/media/footer.webm"
+    preload="metadata"
+    autoplay
+    loop
+    muted
+    playsinline></video>
 </section>
+
+<style>
+  section {
+    mask: linear-gradient(to bottom, transparent 0%, black 20%);
+
+    video {
+      mask: inherit;
+    }
+  }
+</style>

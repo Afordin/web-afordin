@@ -7,7 +7,7 @@ const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 ---
 
-<section class="flex flex-col gap-10 text-center">
+<section id="contributor" class="flex flex-col gap-10 pt-32 text-center">
   <hgroup class="flex flex-col gap-4 text-center">
     <h2 class="text-[40px] font-bold">{t('contributtors.title')}</h2>
     <p class="text-lg font-medium">{t('contributtors.paragraph')}</p>
@@ -34,7 +34,7 @@ const t = useTranslations(lang)
     }
   </article>
   <!-- /TODO: Add twitch subs -->
-  <div class="flex w-full justify-center">
+  <div class="flex w-full justify-center pb-32">
     <Link external asButton to="https://discord.com/invite/comuafor">{t('contributtors.anchor')}</Link>
   </div>
 </section>

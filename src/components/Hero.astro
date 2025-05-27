@@ -7,19 +7,23 @@ const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 ---
 
-<section class="relative z-20 flex min-h-screen w-full flex-col items-center justify-center gap-11">
+<section id="home" class="relative z-20 flex min-h-screen w-full flex-col items-center justify-center gap-11 pt-32">
   <div
     class="pointer-events-none absolute inset-0 h-full w-full bg-linear-to-b from-transparent from-65% to-[#100E14] to-95%"
   >
   </div>
-  <div class="mb-7 rounded-full bg-linear-(--gradient-rainbow) p-0.5">
-    <div class="group flex items-center gap-3 rounded-full bg-[#100d13] px-4 py-1 text-lg">
+  <div class="animation rounded-full bg-linear-(--gradient-rainbow) p-[2px]">
+    <div class="group flex items-center gap-3 rounded-full bg-[#100d13] px-5 py-1 text-base">
       <p class="font-manrope font-medium">{t('hero.welcome')} <span class="font-bold">Afordin</span></p>
       <SaluteHand extraClass="group-hover:animate-salute" />
     </div>
   </div>
-  <hgroup class="font-aeonik flex flex-col gap-11 px-2 text-center drop-shadow-[0px_4px_13px_rgba(0,0,0,0.25)] lg:px-0">
-    <h1 class="text-hero-title font-bold">{t('hero.title')} <br /> {t('hero.title.second')}</h1>
+  <hgroup class="flex flex-col gap-11 px-2 text-center drop-shadow-[0px_4px_13px_rgba(0,0,0,0.25)] lg:px-0">
+    <h1 class="text-hero-title font-calsans leading-[1.3] font-bold tracking-[2.5px]">
+      {t('hero.title')}
+      <br />
+      {t('hero.title.second')}
+    </h1>
     <p class="text-hero-paragraph">{t('hero.paragraph')}</p>
   </hgroup>
   <Link external asButton to="https://lenguajehtml.com/html/semantica/etiqueta-html-h1/">
@@ -38,5 +42,19 @@ const t = useTranslations(lang)
 <style>
   section {
     mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  }
+
+  @keyframes tag-animation {
+    0% {
+      background-position: 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  .animation {
+    background-size: 300% 300%;
+    animation: tag-animation 4s linear infinite;
   }
 </style>

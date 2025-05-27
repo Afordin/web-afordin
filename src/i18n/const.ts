@@ -33,6 +33,7 @@ export const KEY_TRANSLATIONS = {
   'values.section.shared.learning.paragraph': 'values.section.shared.learning.paragraph',
   'values.section.safe.overcoming': 'values.section.safe.overcoming',
   'values.section.safe.overcoming.paragraph': 'values.section.safe.overcoming.paragraph',
+  'values.button': 'values.button',
   'lastProject.title': 'lastProject.title',
   'lastProject.paragraph': 'lastProject.paragraph',
   'lastProject.anchor': 'lastProject.anchor',

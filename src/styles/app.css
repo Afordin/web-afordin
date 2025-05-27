@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-manrope: var(--font-manrope);
-  --font-aeonik: Aeonik, sans-serif;
+  --font-calsans: 'Cal Sans', sans-serif;
+  --font-manrope: 'Manrope', sans-serif;
 
   --text-hero-title: clamp(2.5rem, 5vw, 4rem);
   --text-hero-title--line-height: 1;
@@ -63,7 +63,59 @@
 
 @layer components {
   .btn {
-    @apply font-manrope w-fit rounded-full bg-white px-10 py-5 font-medium text-black;
+    @apply font-manrope relative z-[1] inline-block overflow-hidden rounded-full bg-white px-10 py-5 text-center font-medium text-black;
+    transition: all 0.4s ease;
+  }
+
+  .btn::before,
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 1s ease;
+    z-index: -2;
+  }
+
+  .btn::before {
+    background-color: #f4bbf7;
+    transition-duration: 1000ms;
+  }
+
+  .btn::after {
+    background: linear-gradient(135deg, #fff, #f66a99);
+    transition-duration: 700ms;
+  }
+
+  .btn:hover::before {
+    transform: scaleX(1);
+  }
+
+  .btn:hover::after {
+    transform: scaleX(1);
+  }
+
+  .btn:hover {
+    color: #000;
+    box-shadow: 0 0 20px 8px rgba(246, 106, 153, 0.5); /* efecto glow rosado */
+  }
+
+  .btn:active {
+    animation: click-bounce 0.2s ease-in-out;
+  }
+
+  @keyframes click-bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 }
 
@@ -120,3 +172,100 @@
 .scroll-column {
   will-change: transform;
 }
+@layer utilities {
+  .stroke-animation path {
+    stroke-dasharray: 240;
+    stroke-dashoffset: 240;
+    animation: draw 2s ease forwards;
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+@-webkit-keyframes animate-svg-fill-1 {
+  0% {
+    fill: transparent;
+  }
+
+  100% {
+    fill: rgb(255, 255, 255);
+  }
+}
+
+@keyframes animate-svg-fill-1 {
+  0% {
+    fill: transparent;
+  }
+
+  100% {
+    fill: rgb(255, 255, 255);
+  }
+}
+/* General fill animation SVG'S */
+@keyframes animate-svg-fill {
+  0% {
+    fill: transparent;
+  }
+
+  100% {
+    fill: rgb(255, 255, 255);
+  }
+}
+
+@keyframes animate-svg-fill-4 {
+  0% {
+    fill: transparent;
+  }
+
+  100% {
+    fill: rgb(255, 255, 255);
+  }
+}
+
+/* Apply animation to all svg elements */
+.svg-elem-1,
+.svg-elem-2,
+.svg-elem-3,
+.svg-elem-4 {
+  animation: animate-svg-fill 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+/* Delay different animations for each element */
+.svg-elem-1 {
+  animation-delay: 0.8s;
+}
+
+.svg-elem-2 {
+  animation-delay: 0.8s;
+}
+
+.svg-elem-3 {
+  animation-delay: 1s;
+}
+
+.svg-elem-4 {
+  animation-delay: 1.1s;
+}
+.svg-elem-1 {
+  -webkit-animation: animate-svg-fill-1 0.9s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.9s both;
+  animation: animate-svg-fill-1 0.9s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.9s both;
+}
+
+/* Start css Values */
+.card {
+  @apply mx-auto flex h-auto max-h-[494px] w-full max-w-[417.5px] transform flex-col rounded-xl border border-white/10 p-0 pt-8 shadow-lg backdrop-blur-md transition-transform hover:scale-105 hover:shadow-xl;
+}
+
+.card-img {
+  @apply h-[294px] w-full rounded-t-xl object-cover;
+}
+
+.card-content {
+  @apply flex flex-1 flex-col px-8 pt-6 pb-8;
+}
+
+/* End css Values */

@@ -12,9 +12,14 @@ export default defineConfig({
   experimental: {
     fonts: [
       {
-        provider: fontProviders.fontsource(),
+        provider: fontProviders.google(),
         name: 'Manrope',
         cssVariable: '--font-manrope',
+      },
+      {
+        provider: fontProviders.google(),
+        name: 'Cal Sans',
+        cssVariable: '--font-calsans',
       },
     ],
   },

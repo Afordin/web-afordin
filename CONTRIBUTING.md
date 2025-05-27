@@ -1,4 +1,5 @@
 # Contributing to this project
+
 Thank you for your interest in contributing! To ensure smooth and efficient collaboration, please follow these guidelines.
 
 ## Table of Contents
@@ -12,6 +13,7 @@ Thank you for your interest in contributing! To ensure smooth and efficient coll
 - [Submitting Issues](#-submitting-issues)
 
 ## How to contribute
+
 Thank you for your interest in contributing! To ensure smooth and efficient collaboration, please follow these guidelines.
 
 1. **Explore the Project**: Review the [README](./README.md), structure, and code to understand the project.
@@ -57,6 +59,94 @@ To submit a pull request (PR):
 3. **Test Your Changes**: Make sure your changes don’t introduce any errors and that everything works as expected.
 4. **Open the Pull Request**: Submit a PR from your branch to the main branch of the repository, including a detailed description of your changes.
 5. **Wait for Review**: Maintainers will review your PR and provide feedback. Make any necessary modifications.
+
+## Before sending a Pull Request
+
+To avoid conflicts and ensure your fork is up-to-date with the original repository, **follow these steps carefully:**
+
+### 1. Stash Any Local Changes (Optional)
+
+If you have uncommitted changes and don't want to lose them:
+
+```bash
+  git stash
+```
+
+### 2. Add the Original Repository as upstream (Only Once)
+
+If you haven’t added the original repo as a remote yet:
+
+```bash
+git remote add upstream https://github.com/Afordin/web-afordin.git
+```
+
+### 3. Switch to Your main Branch
+
+Ensure you are on your fork’s main branch:
+
+```bash
+git checkout main
+```
+
+### 4. Sync with the Original Repo (upstream)
+
+Pull the latest changes from the original repository:
+
+```bash
+git fetch upstream
+git rebase upstream/main
+```
+
+### 5. Push the Updated Main Branch to Your Fork
+
+Update your forked repo on GitHub:
+
+```bash
+git push origin main
+```
+
+### 6. Switch to Your Feature/PR Branch
+
+Replace your-branch with the name of your working branch:
+
+```bash
+git checkout your-branch
+```
+
+### 7. Rebase Your Branch onto the Updated main
+
+This helps avoid merge conflicts in your PR:
+
+```bash
+git rebase main
+```
+
+### 8. (Optional) Pop Your Stashed Changes Back
+
+If you stashed earlier:
+
+```bash
+git stash pop
+```
+
+### 9. Push Your Branch
+
+Push your rebased branch to your forked repo:
+
+```bash
+git push origin your-branch
+```
+
+If you rebased and already had pushed before, you may need to force push:
+
+```bash
+git push origin your-branch --force
+```
+
+### 10. Compare and Pull Request
+
+Go to your fork on GitHub, and you should see a "Compare & pull request" button.
+Click it, add a clear title and description for your PR, then submit it.
 
 ## Submitting Issues
 

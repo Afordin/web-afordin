@@ -3,20 +3,20 @@ const { user } = Astro.props
 
 // Determina si es un card "simple" (solo nombre y fondo blanco)
 const isSimple = user.avatar.includes('avatar2') || user.avatar.includes('avatar4') || user.avatar.includes('avatar9')
+const simpleClass = 'bg-neutral-300 min-h-[150px] text-black flex items-center justify-between gap-4 p-6'
+const noSimpleClass = 'bg-black min-h-[369px] text-white p-4 border border-white/10'
 ---
 
-<div
-  class={`rounded-xl w-full max-w-[410px] overflow-hidden ${
-    isSimple
-      ? 'bg-[#D9D9D9] min-h-[150px] text-black flex items-center justify-between gap-4 p-6'
-      : 'bg-black min-h-[369px] text-white p-4 border border-white/10'
-  }`}
->
+<div class:list={['w-full max-w-[410px] overflow-hidden rounded-xl', isSimple ? simpleClass : noSimpleClass]}>
   <div class="flex items-center gap-4">
-    <img src={user.avatar} alt="avatar" class={`${isSimple ? 'w-18 h-18' : 'w-16 h-16'} rounded-full object-cover`} />
+    <img
+      alt="Avatar"
+      src={user.avatar}
+      class:list={[isSimple ? 'h-18 w-18' : 'h-16 w-16', 'rounded-full object-cover']}
+    />
     <div class="flex flex-col">
       <p class="text-2xl font-bold">{user.name}</p>
-      <p class="text-xl text-[#7B7B7B]">@{user.username}</p>
+      <p class:list={[isSimple ? 'text-gray-700' : 'text-gray-300', 'text-xl']}>@{user.username}</p>
     </div>
   </div>
 

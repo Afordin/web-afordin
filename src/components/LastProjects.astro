@@ -26,7 +26,7 @@ const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 ---
 
-<section class="flex w-full flex-col items-center justify-center gap-11 text-white lg:py-20">
+<section id="projects" class="flex w-full flex-col items-center justify-center gap-11 pt-32 text-white lg:py-20">
   <div id="project-showcase" class="group relative mb-24 flex h-72 w-full items-center justify-center">
     {
       PROJECTS_INFO.map(({ src, alt, className }) => (

@@ -1,27 +1,40 @@
 ---
+// Importar el componente reutilizable
 import { getLangFromUrl, useTranslations } from '@/i18n/utils'
+import Link from '@/components/Link.astro'
+import Card from '@/components/ui/Card.astro'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 ---
 
-<section class="flex flex-col px-2">
-  <h2 class="text-center text-[48px] font-bold lg:text-left">{t('values.title')}</h2>
-  <div class="flex flex-wrap lg:flex-row lg:flex-nowrap">
-    <div class="m-5 flex h-full w-full flex-col rounded-xl bg-[#19181d] p-4">
-      <img src="/personpc.svg" alt="personpc" class="size-fit" />
-      <h3 class="text-[28px] font-bold">{t('values.section.free.learning')}</h3>
-      <p>{t('values.section.free.learning.paragraph')}</p>
-    </div>
-    <div class="m-5 flex h-full w-full flex-col rounded-xl bg-[#19181d] p-4">
-      <img src="/messages.svg" alt="messages" />
-      <h3 class="text-[28px] font-bold">{t('values.section.shared.learning')}</h3>
-      <p class="text-[18px]">{t('values.section.shared.learning.paragraph')}</p>
-    </div>
-    <div class="m-5 flex h-full w-full flex-col rounded-xl bg-[#19181d] p-4">
-      <img src="/personStairs.svg" alt="personStairs" class="size-fit" />
-      <h3 class="text-[28px] font-bold">{t('values.section.safe.overcoming')}</h3>
-      <p class="text-[18px]">{t('values.section.safe.overcoming.paragraph')}</p>
-    </div>
+<section id="values" class="grid gap-10 px-10 py-32 md:px-24">
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+    <Card
+      imageSrc="/valuesSvg/Molecula.svg"
+      imageAlt="Molecula"
+      title={t('values.section.free.learning')}
+      paragraph={t('values.section.free.learning.paragraph')}
+      gradient="bg-gradient-to-t from-[#2B1C2D] via-[#2F1E35] to-[#100E14]"
+    />
+    <Card
+      imageSrc="/valuesSvg/Chat.svg"
+      imageAlt="Chat"
+      title={t('values.section.shared.learning')}
+      paragraph={t('values.section.shared.learning.paragraph')}
+      gradient="bg-gradient-to-t from-gray-800 via-gray-700 to-[#100E14]"
+    />
+    <Card
+      imageSrc="/valuesSvg/GraficoBarras.svg"
+      imageAlt="GraficoBarras"
+      title={t('values.section.safe.overcoming')}
+      paragraph={t('values.section.safe.overcoming.paragraph')}
+      gradient="bg-gradient-to-t from-[#2B1C2D] via-[#2F1E35] to-[#100E14]"
+    />
+  </div>
+  <div class="mt-8 flex justify-center">
+    <Link external asButton to="https://discord.com/invite/comuafor">
+      {t('values.button')}
+    </Link>
   </div>
 </section>

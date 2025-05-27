@@ -1,6 +1,6 @@
 ---
-import Font from 'astro/components/Font.astro'
 import { BASE_PATH } from '@/data/consts'
+import { Font } from 'astro:assets'
 
 interface Props {
   title: string
@@ -35,6 +35,5 @@ const canonicalUrl = typeof slug === 'string' ? BASE_PATH + '/' + slug : BASE_PA
 <meta name="twitter:description" content={description} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content={BASE_PATH + '/preview.png'} />
-
 <Font cssVariable="--font-manrope" preload />
-<link rel="preload" href="/fonts/aeonik-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<Font cssVariable="--font-calsans" preload />
