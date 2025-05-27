@@ -112,27 +112,43 @@ export const GET: APIRoute = async ({ request }) => {
 
   const { user_id, ...rest } = await validate.json()
 
-  // Get the subscribers
-  const url = new URL('https://api.twitch.tv/helix/subscriptions')
-  url.searchParams.set('broadcaster_id', user_id)
-  url.searchParams.set('first', '100')
+  // Get all subscribers using pagination
+  let allSubs: any[] = []
+  let cursor: string | undefined = undefined
+  let hasMore = true
 
-  const subsRes = await fetch(url.toString(), {
-    headers: {
-      'Client-Id': import.meta.env.TWITCH_CLIENT_ID!,
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  while (hasMore) {
+    const url = new URL('https://api.twitch.tv/helix/subscriptions')
+    url.searchParams.set('broadcaster_id', user_id)
+    url.searchParams.set('first', '100')
 
-  if (!subsRes.ok) {
-    const err = await subsRes.text()
-    return new Response(`Twitch API error: ${subsRes.status} – ${err}`, { status: 502 })
+    if (cursor) {
+      url.searchParams.set('after', cursor)
+    }
+
+    const subsRes = await fetch(url.toString(), {
+      headers: {
+        'Client-Id': import.meta.env.TWITCH_CLIENT_ID!,
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    if (!subsRes.ok) {
+      const err = await subsRes.text()
+      return new Response(`Twitch API error: ${subsRes.status} – ${err}`, { status: 502 })
+    }
+
+    const { data: subs, pagination } = await subsRes.json()
+
+    allSubs = allSubs.concat(subs)
+
+    // Check if there are more pages
+    cursor = pagination?.cursor
+    hasMore = !!cursor && subs.length === 100
   }
 
-  const { data: subs } = await subsRes.json()
-
   // Extract subscriber IDs
-  const userIds = subs.map((sub: any) => sub.user_id)
+  const userIds = allSubs.map((sub: any) => sub.user_id)
   const chunks = chunkArray(userIds, 100)
 
   const enrichedUsers: Record<string, any> = {}
@@ -157,7 +173,7 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   // Merge subscription data with profile images
-  const enrichedSubs = subs.map((sub: any) => ({
+  const enrichedSubs = allSubs.map((sub: any) => ({
     ...sub,
     profile_image_url: enrichedUsers[sub.user_id]?.profile_image_url ?? null,
     display_name: enrichedUsers[sub.user_id]?.display_name ?? sub.user_name,
