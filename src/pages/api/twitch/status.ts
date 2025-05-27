@@ -30,7 +30,7 @@ export const GET: APIRoute = async () => {
 
     if (hasRefreshToken) {
       try {
-        const testRes = await fetch('/api/twitch/subscribers')
+        const testRes = await fetch(new URL('/api/twitch/subscribers', import.meta.env.SITE))
         canGetAccessToken = testRes.ok
         if (!testRes.ok) {
           const errorText = await testRes.text()
