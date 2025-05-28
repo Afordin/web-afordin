@@ -1,5 +1,19 @@
 @import 'tailwindcss';
 
+:root {
+  --svg-animation-fill: #100e14;
+  --svg-pattern-bg-image-color: rgba(213, 204, 226, 0.25);
+
+  #square-pattern {
+    z-index: 0;
+    background-size: 18px 18px;
+    background-image:
+      linear-gradient(to bottom, var(--svg-pattern-bg-image-color) 1px, transparent 1px),
+      linear-gradient(to right, var(--svg-pattern-bg-image-color) 1px, transparent 1px);
+    mask-image: linear-gradient(to right, transparent 10%, black 50%, transparent 90%);
+  }
+}
+
 @theme {
   --font-calsans: 'Cal Sans', sans-serif;
   --font-manrope: 'Manrope', sans-serif;
@@ -63,47 +77,47 @@
 
 @layer components {
   .btn {
-    @apply font-manrope relative z-[1] inline-block overflow-hidden rounded-full bg-white px-10 py-5 text-center font-medium text-black;
+    @apply font-manrope bg-primary relative z-[1] inline-block overflow-hidden rounded-full px-10 py-5 text-center font-medium text-white dark:bg-white dark:text-black;
     transition: all 0.4s ease;
-  }
 
-  .btn::before,
-  .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 1s ease;
-    z-index: -2;
-  }
+    &::before,
+    &::after {
+      content: '';
+      inset: 0;
+      z-index: -2;
+      position: absolute;
+      transform: scaleX(0);
+      border-radius: inherit;
+      transform-origin: center;
+      transition: transform 1s ease;
+    }
 
-  .btn::before {
-    background-color: #f4bbf7;
-    transition-duration: 1000ms;
-  }
+    &::before {
+      background-color: #f4bbf7;
+      transition-duration: 1000ms;
+    }
 
-  .btn::after {
-    background: linear-gradient(135deg, #fff, #f66a99);
-    transition-duration: 700ms;
-  }
+    &::after {
+      background: linear-gradient(135deg, #fff, #f66a99);
+      transition-duration: 700ms;
+    }
 
-  .btn:hover::before {
-    transform: scaleX(1);
-  }
+    &:hover::before {
+      transform: scaleX(1);
+    }
 
-  .btn:hover::after {
-    transform: scaleX(1);
-  }
+    &:hover::after {
+      transform: scaleX(1);
+    }
 
-  .btn:hover {
-    color: #000;
-    box-shadow: 0 0 20px 8px rgba(246, 106, 153, 0.5); /* efecto glow rosado */
-  }
+    &:hover {
+      color: #000;
+      box-shadow: 0 0 20px 8px rgba(246, 106, 153, 0.5); /* efecto glow rosado */
+    }
 
-  .btn:active {
-    animation: click-bounce 0.2s ease-in-out;
+    &:active {
+      animation: click-bounce 0.2s ease-in-out;
+    }
   }
 
   @keyframes click-bounce {
@@ -172,6 +186,7 @@
 .scroll-column {
   will-change: transform;
 }
+
 @layer utilities {
   .stroke-animation path {
     stroke-dasharray: 240;
@@ -192,7 +207,7 @@
   }
 
   100% {
-    fill: rgb(255, 255, 255);
+    fill: var(--svg-animation-fill);
   }
 }
 
@@ -202,7 +217,7 @@
   }
 
   100% {
-    fill: rgb(255, 255, 255);
+    fill: var(--svg-animation-fill);
   }
 }
 /* General fill animation SVG'S */
@@ -212,7 +227,7 @@
   }
 
   100% {
-    fill: rgb(255, 255, 255);
+    fill: var(--svg-animation-fill);
   }
 }
 
@@ -222,7 +237,7 @@
   }
 
   100% {
-    fill: rgb(255, 255, 255);
+    fill: var(--svg-animation-fill);
   }
 }
 
@@ -269,3 +284,10 @@
 }
 
 /* End css Values */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --svg-animation-fill: rgb(255, 255, 255);
+    --svg-pattern-bg-image-color: rgba(60, 58, 63, 0.25);
+  }
+}

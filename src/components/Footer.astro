@@ -1,14 +1,12 @@
 ---
-import FooterContributors from './FooterContributors.astro'
-import type { Contributor } from '@/types/index.d'
-import { fetchGithub } from '../utils/fetchGithub'
-import { designersData } from '@/data/designersData'
-import Discord from '@/assets/Discord.svg'
-import Youtube from '@/assets/Youtube.svg'
-import Twitch from '@/assets/Twitch.svg'
-import { getLangFromUrl, useTranslations } from '@/i18n/utils'
-// import SelectLanguage from './ui/SelectLanguage.astro'
 import Link from '@/components/Link.astro'
+import Icon from '@/components/Icon.astro'
+import { fetchGithub } from '@/utils/fetchGithub.ts'
+import { designersData } from '@/data/designersData.ts'
+import FooterContributors from './FooterContributors.astro'
+import { getLangFromUrl, useTranslations } from '@/i18n/utils.ts'
+// import SelectLanguage from './ui/SelectLanguage.astro'
+import type { Contributor } from '@/types/index.d'
 
 let dataDevs: Array<Contributor> = []
 
@@ -67,12 +65,13 @@ const links = [
         }
       </ul>
       <!-- <SelectLanguage /> -->
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 text-white">
         <p class="text-sm">
           {t('footer.paragraph.designed')}
           <Link
+            external
             to="https://discord.com/invite/comuafor"
-            class="relative font-semibold text-white no-underline underline-offset-4 after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-left after:bg-white after:transition-all after:duration-300 after:ease-in-out after:content-[''] hover:after:w-0"
+            class="relative font-semibold no-underline underline-offset-4 after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-left after:bg-white after:transition-all after:duration-300 after:ease-in-out after:content-[''] hover:after:w-0"
           >
             Comuafor
           </Link>
@@ -85,7 +84,7 @@ const links = [
             to="https://discord.com/invite/comuafor"
             class="grid h-9 w-9 place-items-center transition-all duration-500 ease-in-out hover:rotate-[360deg] hover:rounded-full hover:bg-[#5868F2]"
           >
-            <Discord />
+            <Icon name="discord" width={24} height={20} />
           </Link>
           <Link
             external
@@ -93,7 +92,7 @@ const links = [
             to="https://www.youtube.com/@afor_lives"
             class="grid h-9 w-9 place-items-center transition-all duration-500 ease-in-out hover:rotate-[360deg] hover:rounded-full hover:bg-[#C4302B]"
           >
-            <Youtube />
+            <Icon name="youtube" width={22} height={17} />
           </Link>
           <Link
             external
@@ -101,7 +100,7 @@ const links = [
             to="https://www.twitch.tv/afor_digital"
             class="grid h-9 w-9 place-items-center transition-all duration-500 ease-in-out hover:rotate-[360deg] hover:rounded-full hover:bg-[#6441A5]"
           >
-            <Twitch />
+            <Icon name="twitch" width={18} height={22} />
           </Link>
         </div>
       </div>

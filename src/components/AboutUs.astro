@@ -8,15 +8,19 @@
     class="flex w-full flex-col items-center justify-center gap-0 overflow-hidden rounded-2xl bg-linear-[75deg,#FF85E4_15%,#85FF85_40%,#85BBFF_75%,#BC85FF] p-[3px] shadow-[0px_1px_30px_rgba(255,133,228,0.3)] sm:flex-row"
   >
     <div
-      class="bg-primary flex w-full flex-col justify-between overflow-hidden rounded-[14px] shadow-[inset_0_2px_25px_#6F00FF] md:h-full md:flex-row"
+      class="dark:bg-primary flex w-full flex-col justify-between overflow-hidden rounded-[14px] bg-[#DEDEDE] md:h-full md:flex-row dark:shadow-[inset_0_2px_25px_#6F00FF]"
     >
       <div
         class="mr-0 mb-11 flex flex-col justify-between gap-14 px-6 pt-14 md:mr-[60px] md:mb-0 md:h-[450px] md:w-[422px] md:py-11 md:ps-11"
       >
-        <h3 class="text-center text-2xl font-bold md:text-start md:text-3xl">
+        <h3 class="text-center text-2xl font-bold md:text-start md:text-4xl">
           Somos una comunidad de desarrollo y diseño creada por afor digital.
         </h3>
-        <p class="text-base md:text-lg">Nacida en noviembre de 2022, actualmente cuenta con +5000 usuarios activos.</p>
+        <p class="text-base font-bold md:text-lg dark:font-normal">
+          Nacida en noviembre de 2022, <strong class="text-[#8640E1] dark:text-white"
+            >actualmente cuenta con +5000 usuarios activos.</strong
+          >
+        </p>
       </div>
       <div
         class="max-h-[480px] min-h-[262px] w-full bg-[url(/about/comu.svg)] bg-cover bg-center sm:h-[450px] md:max-w-[734px] md:min-w-[400px]"
@@ -27,10 +31,12 @@
   <!-- hackaton & talk -->
   <div class="flex flex-col justify-between gap-5 md:flex-row md:justify-center md:gap-10">
     <div
-      class="flex max-h-[680px] w-full flex-col items-center justify-center gap-20 rounded-2xl border-[1px] border-solid border-[#ededed66] bg-[#212121] p-11 pb-0 md:gap-20"
+      class="flex max-h-[680px] w-full flex-col items-center justify-center gap-20 rounded-2xl border-[1px] border-solid border-[#ededed66] bg-[#DEDEDE] p-11 pb-0 md:gap-20 dark:bg-[#212121]"
     >
       <div class="flex flex-col gap-5">
-        <h3 class="text-center text-2xl font-bold md:text-start md:text-3xl">Participa en una hackaton</h3>
+        <h3 class="text-center text-2xl font-bold text-[#8640E1] md:text-start md:text-3xl dark:text-white">
+          Participa en una hackaton
+        </h3>
         <p class="text-base md:text-lg">Aprende, crea y colabora en un ambiente libre de presiones.</p>
         <p class="text-base md:text-lg">
           Aquí todos suman: quienes saben más guían, y quienes aprenden dan nuevas ideas.
@@ -47,7 +53,9 @@
       class="text-primary flex max-h-[680px] w-full flex-col items-center gap-20 rounded-2xl bg-[#EDEDED] p-11 pb-7 md:justify-center md:gap-30"
     >
       <div class="flex flex-col gap-5">
-        <h3 class="text-center text-2xl font-bold md:text-start md:text-3xl">Da una charla</h3>
+        <h3 class="dark:text-primary text-center text-2xl font-bold text-[#8640E1] md:text-start md:text-3xl">
+          Da una charla
+        </h3>
         <p class="text-base md:text-lg">Comparte lo que sabes y potencia el aprendizaje colectivo.</p>
         <p class="text-base md:text-lg">
           No importa tu nivel, Cada experiencia cuenta. ¡Tu voz puede inspirar a alguien!
@@ -68,10 +76,12 @@
   <!-- other activities -->
   <div class="flex flex-col gap-5 md:flex-row md:justify-between md:gap-10">
     <div
-      class="bg-primary flex w-full flex-col items-center justify-between overflow-hidden rounded-2xl border-[1px] border-solid border-[#ededed66] md:flex-1"
+      class="dark:bg-primary flex w-full flex-col items-center justify-between overflow-hidden rounded-2xl border-[1px] border-solid border-[#ededed66] bg-[#DEDEDE] md:flex-1"
     >
-      <p class="w-full p-10 text-center font-bold md:text-3xl">
-        Ayudamos a los diseñadores y desarrolladores a crecer laboralmente mejorando sus perfiles profesionales.
+      <p class="w-full p-10 text-center font-bold md:text-2xl">
+        Ayudamos a los diseñadores y desarrolladores a crecer laboralmente <strong
+          class="text-[#8640E1] dark:text-white">mejorando sus perfiles profesionales.</strong
+        >
       </p>
       <div class="w-ful relative mr-5">
         <p
@@ -84,20 +94,23 @@
     </div>
     <div class="flex h-full w-full flex-col gap-5 font-bold md:w-full md:max-w-[422px]">
       <div
-        class="bg-primary relative flex items-center justify-center rounded-2xl border-[1px] border-solid border-[#ededed66] md:h-1/2"
+        class="dark:bg-primary relative flex items-center justify-center rounded-2xl border-[1px] border-solid border-[#ededed66] bg-[#DEDEDE] md:h-1/2"
       >
         <img src="/about/resources.webp" alt="" class="w-full object-cover" />
-        <p class="absolute top-[50%] left-[50%] w-3/4 -translate-[50%] text-center text-base">
-          Mas de 1000 recursos para ayudar a diseñadores y desarrolladores a avanzar en sus carreras profesionales
+        <p class="absolute top-[50%] left-[50%] w-3/4 -translate-[50%] text-center text-base font-bold md:text-left">
+          <strong class="text-[#8640E1] dark:text-white">Más de 1000 recursos</strong> para ayudar a diseñadores y desarrolladores
+          a avanzar en sus carreras profesionales
         </p>
       </div>
       <div
         class="flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-linear-[75deg,#FF85E4_15%,#85FF85_40%,#85BBFF_75%,#BC85FF] p-[3px] shadow-[0px_1px_30px_rgba(255,133,228,0.3)]"
       >
         <div
-          class="bg-primary flex h-full w-full flex-col items-center justify-between gap-10 overflow-hidden rounded-[14px] p-10 text-center text-2xl shadow-[inset_0_2px_25px_#6F00FF] md:gap-20"
+          class="dark:bg-primary flex h-full w-full flex-col items-center justify-between gap-10 overflow-hidden rounded-[14px] bg-[#DEDEDE] p-10 text-center text-2xl md:gap-20 dark:shadow-[inset_0_2px_25px_#6F00FF]"
         >
-          <p>¿Hay algo que quieras aprender?</p>
+          <p class="font-bold text-[#8640E1] md:text-2xl dark:font-normal dark:text-white">
+            ¿Hay algo que quieras aprender?
+          </p>
           <a class="btn rounded-2xl" target="_blank" href="https://discord.com/invite/comuafor">Empieza a contribuir</a>
         </div>
       </div>
@@ -111,9 +124,9 @@
       class="flex w-full flex-col justify-between gap-16 overflow-hidden rounded-[16px] bg-linear-[135deg,#100e14_30%,#100e1463_80%,#100e144d] md:h-full md:flex-row md:gap-8 md:rounded-[22px] md:bg-linear-[45deg,#100e14_5%,#100e1463_50%,#100e144d]"
     >
       <div
-        class="flex flex-1 flex-col justify-between gap-14 px-6 pt-14 md:max-h-[450px] md:w-[422px] md:py-11 md:pl-11"
+        class="dark:text-primary flex flex-1 flex-col justify-between gap-14 px-6 pt-14 text-white md:max-h-[450px] md:w-[422px] md:py-11 md:pl-11"
       >
-        <h3 class="text-center text-2xl font-bold md:text-start md:text-3xl">Simulacros de Entrevista Técnica</h3>
+        <h3 class="text-center text-2xl font-bold md:text-start md:text-4xl">Simulacros de Entrevista Técnica</h3>
         <div class="flex flex-col gap-4">
           <p class="text-base whitespace-normal md:text-lg">
             Aprende a pasar procesos de selección, parte humana y code living en un entorno controlado.
