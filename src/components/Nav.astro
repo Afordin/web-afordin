@@ -1,11 +1,8 @@
 ---
-import { getLangFromUrl, useTranslations } from '@/i18n/utils'
 import Link from '@/components/Link.astro'
-import Youtube from '../assets/Youtube.svg?url'
-import Twitch from '../assets/Twitch.svg?url'
-import Github from '../components/ui/GitHubIcon.astro'
-import Discord from '../components/ui/DiscordIcon.astro'
-import LogoIcon from '../components/ui/LogoIcon.astro'
+import Icon from '@/components/Icon.astro'
+import LogoIcon from '@/components/ui/LogoIcon.astro'
+import { getLangFromUrl, useTranslations } from '@/i18n/utils.ts'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -31,48 +28,44 @@ const links = [
     to: '#contributor',
     name: t('nav.contributor'),
   },
-] satisfies Array<{ to: string; name: string }>
+] as const
 
 const socialLinks = [
   {
     to: 'https://www.github.com/Afordin',
     name: 'github',
-    icon: Github,
   },
   {
     to: 'https://discord.com/invite/comuafor',
     name: 'discord',
-    icon: Discord,
   },
   {
     to: 'https://www.youtube.com/@afor_lives',
     name: 'youtube',
-    icon: Youtube,
   },
   {
     to: 'https://www.twitch.tv/afor_digital',
     name: 'twitch',
-    icon: Twitch,
   },
-] satisfies Array<{ to: string; name: string; icon: any }>
+] as const
 ---
 
 <header
   class="font-manrope fixed inset-x-0 top-0 z-50 mx-auto max-h-40 max-w-7xl px-4 transition-transform duration-300 ease-in-out"
 >
   <nav
-    class="mt-6 flex items-center justify-between gap-6 rounded-full border border-orange-600/20 bg-gradient-to-br from-white/15 to-white/0 px-8 py-4 shadow-lg backdrop-blur-md transition-all duration-300 ease-in-out"
+    class="mt-6 flex items-center justify-between gap-6 rounded-full border border-orange-600/20 bg-white bg-gradient-to-br px-8 py-4 shadow-lg backdrop-blur-md transition-all duration-300 ease-in-out dark:bg-transparent dark:from-white/15 dark:to-white/0"
   >
     <div>
       <Link to="/" aria-label="Afordin Logo">
-        <LogoIcon />
+        <LogoIcon class="text-primary dark:text-white" />
       </Link>
     </div>
     <div class="flex lg:hidden">
       <button
         type="button"
         id="menu-toggle"
-        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
+        class="text-primary -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 dark:text-white"
       >
         <span class="sr-only">Toggle menu</span>
         <svg class="hamburger-icon size-10" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -88,11 +81,11 @@ const socialLinks = [
           <>
             <Link
               {to}
-              class="font-regular relative text-xl text-white after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+              class="font-regular text-primary relative text-xl after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full dark:text-white"
             >
               {name}
             </Link>
-            {index < links.length - 1 && <span class="text-[8px] text-gray-300">●</span>}
+            {index < links.length - 1 && <span class="text-[8px] text-gray-500 dark:text-gray-300">●</span>}
           </>
         ))
       }
@@ -101,9 +94,9 @@ const socialLinks = [
     <!-- Social media icons for large screens -->
     <div class="hidden items-center justify-center gap-4 lg:flex">
       {
-        socialLinks.map(({ icon: Icon, to }) => (
+        socialLinks.map(({ name, to }) => (
           <Link to={to} external class="inline-block transition-transform duration-300 hover:scale-110">
-            <Icon class="h-6 w-6" />
+            <Icon {name} class="h-6 w-6" />
           </Link>
         ))
       }
@@ -117,7 +110,7 @@ const socialLinks = [
     class="pointer-events-none fixed inset-0 z-50 flex transform items-center justify-center opacity-0 transition-all duration-50 lg:hidden"
   >
     <div
-      class="flex h-screen w-full flex-col gap-4 bg-gradient-to-br from-purple-950/80 to-black shadow-lg backdrop-blur-md"
+      class="flex h-screen w-full flex-col gap-4 bg-gradient-to-br from-purple-800 to-white shadow-lg backdrop-blur-md dark:from-purple-950/80 dark:to-black"
     >
       <div class="mt-6 flex justify-center p-2">
         <button
@@ -152,13 +145,9 @@ const socialLinks = [
         <!-- Render social media icons (Github, Discord, YouTube, Twitch) in mobile menu -->
         <div class="flex flex-row items-center justify-center gap-6">
           {
-            socialLinks.map(({ icon: Icon, name, to }) => (
+            socialLinks.map(({ name, to }) => (
               <Link to={to} external class="inline-block transition-transform duration-300 hover:scale-110">
-                {typeof Icon === 'string' ? (
-                  <img src={Icon} alt={`Icono de ${name}`} class="h-6 w-6" />
-                ) : (
-                  <Icon class="h-6 w-6" />
-                )}
+                <Icon {name} class="h-6 w-6" />
               </Link>
             ))
           }

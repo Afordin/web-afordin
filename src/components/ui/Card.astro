@@ -1,5 +1,5 @@
 ---
-export interface Props {
+interface Props {
   imageSrc: string
   imageAlt: string
   title: string
@@ -10,13 +10,13 @@ export interface Props {
 const { imageSrc, imageAlt, title, paragraph, gradient } = Astro.props
 ---
 
-<div class={`card ${gradient}`}>
+<div class:list={['card', gradient]}>
   <img src={imageSrc} alt={imageAlt} loading="lazy" class="card-img" />
   <div class="card-content">
-    <h3 class="text-xl font-bold text-white capitalize sm:text-base md:text-lg">
+    <h3 class="text-primary text-xl font-bold capitalize sm:text-base md:text-lg dark:text-white">
       {title}
     </h3>
-    <p class="text-sm leading-relaxed font-light text-white/80 sm:text-xs md:text-xs">
+    <p class="text-primary/80 text-sm leading-relaxed font-light sm:text-xs md:text-xs dark:text-white/80">
       {paragraph}
     </p>
   </div>
