@@ -2,9 +2,12 @@
 import mods from '../data/contributors/mods.json'
 import { getLangFromUrl, useTranslations } from '@/i18n/utils'
 import Link from '@/components/Link.astro'
+import { getTwitchSubs } from '@/services/getTwitchSubs'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
+
+const twitchSubs = await getTwitchSubs()
 ---
 
 <section id="contributor" class="flex flex-col gap-10 pt-32 text-center">
@@ -34,7 +37,32 @@ const t = useTranslations(lang)
     }
   </article>
   <!-- /TODO: Add twitch subs -->
-  <div class="flex w-full justify-center pb-32">
-    <Link external asButton to="https://discord.com/invite/comuafor">{t('contributtors.anchor')}</Link>
-  </div>
+
+  <article class="flex flex-col gap-4">
+    <div
+      class="grid w-full grid-cols-[repeat(auto-fill,minmax(40px,_1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(60px,_1fr))]"
+    >
+      {
+        twitchSubs.subscribers.map((sub: any) => {
+          return (
+            <div class="group relative">
+              <div title="title" class="absolute -top-8 left-0 hidden rounded-md bg-slate-800 px-4 group-hover:block">
+                {sub.display_name || sub.user_name}
+              </div>
+
+              <img
+                alt={`${sub.user_name} subscriber avatar`}
+                src={sub.profile_image_url}
+                class="group aspect-square h-[50px] w-full object-cover sm:h-[70px]"
+              />
+            </div>
+          )
+        })
+      }
+    </div>
+
+    <div class="flex w-full justify-center pb-32">
+      <Link external asButton to="https://discord.com/invite/comuafor">{t('contributtors.anchor')}</Link>
+    </div>
+  </article>
 </section>

@@ -30,6 +30,9 @@ pnpm-debug.log*
 # eslint cache
 .eslintcache
 
+# netlify
+.netlify/
+
 # node.js
 package-lock.json
 pnpm-lock.yaml
