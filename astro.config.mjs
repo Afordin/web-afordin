@@ -8,7 +8,7 @@ import { defineConfig, fontProviders } from 'astro/config'
 export default defineConfig({
   output: 'server',
   adapter: netlify(),
-  site: 'https://afordintest.netlify.app',
+  site: 'https://afordin.netlify.app',
   integrations: [icon(), iconTyping()],
   vite: {
     plugins: [tailwindcss()],
