@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
 import { setRefreshToken, setAccessToken } from '@/lib/tokenStore'
+import { getTwitchUser } from '@/services/getTwitchUser'
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url)
@@ -46,6 +47,12 @@ export const GET: APIRoute = async ({ request }) => {
   // Save tokens in memory
   await setRefreshToken(refresh_token)
   await setAccessToken(access_token, expires_in)
+
+  // Check if the user is allowed (only user with id 843314662)
+  const user = await getTwitchUser(access_token)
+  if (!user || user.id !== '843314662') {
+    return new Response('No tienes permiso para iniciar sesión.', { status: 403 })
+  }
 
   return new Response(
     `
