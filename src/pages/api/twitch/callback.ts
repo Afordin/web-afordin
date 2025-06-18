@@ -36,6 +36,12 @@ export const GET: APIRoute = async ({ request }) => {
 
   const { access_token, refresh_token, expires_in, scope } = await tokenRes.json()
 
+  // Check if the user is allowed (only user with id 843314662)
+  const user = await getTwitchUser(access_token)
+  if (!user || user.id !== '843314662') {
+    return new Response('No tienes permiso para iniciar sesión.', { status: 403 })
+  }
+
   // Validate that we have the necessary scopes
   const requiredScopes = ['channel:read:subscriptions']
   const missingScopes = requiredScopes.filter((s) => !scope.includes(s))
@@ -47,12 +53,6 @@ export const GET: APIRoute = async ({ request }) => {
   // Save tokens in memory
   await setRefreshToken(refresh_token)
   await setAccessToken(access_token, expires_in)
-
-  // Check if the user is allowed (only user with id 843314662)
-  const user = await getTwitchUser(access_token)
-  if (!user || user.id !== '843314662') {
-    return new Response('No tienes permiso para iniciar sesión.', { status: 403 })
-  }
 
   return new Response(
     `
