@@ -37,7 +37,8 @@ export async function getRefreshToken(): Promise<string> {
       if (!dataText) {
         throw new Error('No refresh token found in storage. Please re-authenticate.')
       }
-      const data = JSON.parse(dataText as string) as TokenData
+      const dataString = typeof dataText === 'string' ? dataText : new TextDecoder().decode(dataText)
+      const data = JSON.parse(dataString) as TokenData
       if (!data?.refreshToken) {
         throw new Error('No refresh token found in storage. Please re-authenticate.')
       }
@@ -59,7 +60,9 @@ export async function setRefreshToken(token: string): Promise<void> {
       try {
         const existingText = await tokenStore.get('tokens')
         if (existingText) {
-          existingData = JSON.parse(existingText as string) as TokenData
+          const existingString =
+            typeof existingText === 'string' ? existingText : new TextDecoder().decode(existingText)
+          existingData = JSON.parse(existingString) as TokenData
         }
       } catch {
         // If it doesn't exist or there's an error, use empty object
@@ -89,7 +92,9 @@ export async function setAccessToken(token: string, expiresIn: number): Promise<
       try {
         const existingText = await tokenStore.get('tokens')
         if (existingText) {
-          existingData = JSON.parse(existingText as string) as TokenData
+          const existingString =
+            typeof existingText === 'string' ? existingText : new TextDecoder().decode(existingText)
+          existingData = JSON.parse(existingString) as TokenData
         }
       } catch {
         // If it doesn't exist or there's an error, use empty object
@@ -121,7 +126,8 @@ export async function getStoredAccessToken(): Promise<string | null> {
       if (!dataText) {
         return null
       }
-      const data = JSON.parse(dataText as string) as TokenData
+      const dataString = typeof dataText === 'string' ? dataText : new TextDecoder().decode(dataText)
+      const data = JSON.parse(dataString) as TokenData
       if (data?.accessToken && data?.expiresAt && Date.now() < data.expiresAt) {
         storedAccessToken = data.accessToken
         tokenExpiry = data.expiresAt

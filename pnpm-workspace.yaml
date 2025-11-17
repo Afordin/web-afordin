@@ -1,6 +1,6 @@
-ignoredBuiltDependencies:
-  - simple-git-hooks
-
 onlyBuiltDependencies:
+  - '@parcel/watcher'
   - esbuild
+  - protobufjs
   - sharp
+  - simple-git-hooks
